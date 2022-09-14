@@ -4,6 +4,7 @@ version = '3'
 # Traefik reverse-proxy configuration begin
 [services.reverse-proxy]
   image = "traefik:v2.8"
+  # Docker compose arguments
   command = [
     "--providers.docker",
     "--api.insecure=true",
@@ -25,7 +26,9 @@ version = '3'
     "traefik.http.routers.api.entrypoints=web",
     "traefik.http.routers.api.entrypoints=websecure"
   ]
-
+# This section must be top level to enable exposing network.
+[networks]
+  lan.external = true
 # [serversTransport]
 #   insecureSkipVerify = true
 
