@@ -43,7 +43,7 @@ version = '3'
   [services.pihole.networks]
     lan = []
     backend.ipv4_address = "172.31.0.100"
-  services.pihole.labels = [
+  [services.pihole.labels] = [
     "traefik.enable=true",
     "traefik.http.routers.pihole.rule=Host(`pihole.local`)",
     "traefik.http.services.pihole.loadbalancer.server.port=80",
