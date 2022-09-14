@@ -1,0 +1,57 @@
+# Docker compose version
+version = '3'
+
+# Traefik reverse-proxy configuration begin
+[services.reverse-proxy]
+  image = "traefik:v2.8"
+  command = [
+    "--providers.docker",
+    "--api.insecure=true",
+    "--entrypoints.web.address=:80",
+    "--entrypoints.websecure.address=:443" 
+  ]
+  ports = [
+    "80:80",
+    "443:443",
+    "8080:8080"
+  ]
+  volumes = [
+    "/var/run/docker.sock:/var/run/docker.sock:ro"
+  ]
+  labels = [
+    "traefik.enable=true",
+    'traefik.http.routers.api.rule=Host(`traefik.local`)',
+    "traefik.http.routers.api.service=api@internal",
+    "traefik.http.routers.api.entrypoints=web",
+    "traefik.http.routers.api.entrypoints=websecure"
+  ]
+
+# [serversTransport]
+#   insecureSkipVerify = true
+
+# [entryPoints]
+#   [entryPoints.web]
+#     address = ":80"
+#   [entryPoints.web.http.redirections.entryPoint]
+#     to = "websecure"
+#     scheme = "https"
+#   [entryPoints.websecure]
+#     address = ":443"
+#   [entryPoints.default]
+#     address = ":8080"
+
+# [certificatesResolvers]
+  # [certificatesResolvers.staging.acme]
+    # email = "roderick.zambrano.g@gmail.com"
+    # storage = "/etc/traefik/certs/acme.json"
+    # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+    # httpChallenge.entryPoint = "web"
+  # [certificatesResolvers.production.acme]
+  # email = "roderick.zambrano.g@gmail.com"
+  # storage = "/etc/traefik/certs/acme.json"
+  # caServer = "https://acme-v02.api.letsencrypt.org/directory"
+  # httpChallenge.entryPoint = "web"
+# [providers]
+  # [providers.docker]
+  # endpoint = "unix:///var/run/docker/sock"
+  # exposedByDefault = false
