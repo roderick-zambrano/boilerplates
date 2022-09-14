@@ -4,10 +4,11 @@ version = '3'
 [services.pihole]
   image = "pihole/pihole:latest"
   container_name = "pihole"
-  ports = [
-    "53:53/tcp",
-    "53:53/udp",
-  ]
+  network_mode = "host"
+  # ports = [
+  #   "53:53/tcp",
+  #   "53:53/udp",
+  # ]
   dns = [
     "127.0.0.1", # local host
     "149.112.112.112", # Quad9
@@ -55,7 +56,7 @@ services.pihole.depends_on = [
   image = "noamokman/dhcp-helper"
   container_name = "dhcp-helper"
   restart = "unless-stopped"
-  network_mode = "host"
+  network_mode = "host" 
   command = [
     "-s 172.31.0.100"
   ]
@@ -64,3 +65,4 @@ services.pihole.depends_on = [
     "subnet: 172.31.0.0/16"
   ]
   lan.external = true
+ 
