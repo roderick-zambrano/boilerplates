@@ -1,0 +1,66 @@
+# Docker compose version
+version = '3'
+
+[services.pihole]
+  image = "pihole/pihole:latest"
+  container_name = "pihole"
+  ports = [
+    "53:53/tcp",
+    "53:53/udp",
+  ]
+  dns = [
+    "127.0.0.1", # local host
+    "149.112.112.112", # Quad9
+    "9.9.9.9", # Quad9
+    "1.1.1.1", # Cloudflare
+    "8.8.8.8" # Google
+  ]
+  # Dependencies for Pi-hole configuration.
+  [environment]
+    TZ = "America/Panama"
+    WEBPASSWORD = "" # Add password in production environment.
+    PIHOLE_DNS_ = "9.9.9.9;149.112.112.112;1.1.1.1;8.8.8.8"
+    DNSSEC = true
+    ServerIP = "192.168.1.119" # Actual server IP. Matches DHCP conf file IP.
+    VIRTUAL_HOST = "pihole.local" # Same as port traefik config
+    DNSMASQ_LISTENING = "all"
+    DHCP_ACTIVE = true
+    DHCP_START = "192.168.0.100"
+    DHCP_END = "192.168.0.199"
+    DHCP_ROUTER = "192.168.0.1"
+    DHCP_LEASETIME = 6
+    WEBTHEME = "default-dark"
+    PIHOLE_DOMAIN = "lan"
+  volumes = [
+    "/services/pihole/pihole:/etc/pihole/",
+    "/services/pihole/dnsmasq.d:/etc/dnsmasq.d/"
+  ]
+  cap_add = [
+    "NET_ADMIN"
+  ]
+  restart = "unless-stopped"
+  [services.pihole.networks]
+    lan = []
+    backend.ipv4_address = "172.31.0.100"
+  services.pihole.labels = [
+    "traefik.enable=true",
+    "traefik.http.routers.pihole.rule=Host(`pihole.local`)",
+    "traefik.http.services.pihole.loadbalancer.server.port=80",
+    "traefik.http.routers.pihole.entrypoints=web,websecure"
+  ]
+services.pihole.depends_on = [
+    "dhcphelper"
+  ]
+[services.dhcphelper]
+  image = "noamokman/dhcp-helper"
+  container_name = "dhcp-helper"
+  restart = "unless-stopped"
+  network_mode = "host"
+  command = [
+    "-s 172.31.0.100"
+  ]
+[networks]
+  backend.ipam.config = [
+    "subnet: 172.31.0.0/16"
+  ]
+  lan.external = true
