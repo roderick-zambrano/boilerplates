@@ -7,6 +7,8 @@ services:
       - --api.insecure=true
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
+    networks:
+      - lan
     ports:
       - 80:80
       - 443:443
@@ -17,8 +19,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.api.rule=Host(`traefik.local`)
       - traefik.http.routers.api.service=api@internal
-      - traefik.http.routers.api.entrypoints=web
-      - traefik.http.routers.api.entrypoints=websecure
+      - traefik.http.routers.api.entrypoints=web,websecure
 networks:
   lan:
     external: true
