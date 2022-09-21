@@ -3,6 +3,7 @@ version = '3'
 
 [services.pihole]
   container_name = "pihole"
+  hostname = "pihole"
   image = "pihole/pihole:latest"
   # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
   ports = [
@@ -10,6 +11,9 @@ version = '3'
     "53:53/udp",
     "67:67/udp",
     "8001:80/tcp"
+  ]
+  labels = [
+    "traefik.enable=true"
   ]
   dns = [
     "127.0.0.1", # local host
