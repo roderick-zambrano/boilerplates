@@ -14,7 +14,9 @@ version = '3'
     "8001:80/tcp"
   ]
   labels = [
-    "traefik.enable=true"
+    "traefik.enable: true",
+    'traefik.http.routers.pihole.entrypoints: "websecure"',
+    'traefik.http.routers.pihole.rule: (Host(`pihole.lan`) && Path(`/pihole`)',
   ]
   dns = [
     "127.0.0.1", # local host
