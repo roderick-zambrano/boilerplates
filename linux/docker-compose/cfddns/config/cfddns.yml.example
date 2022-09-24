@@ -1,0 +1,3 @@
+token: "ExampleTokenGoesHere"
+interval: 43200 # In seconds
+endpoint: "https://api.ipify.org" # Public IP query endpoint
