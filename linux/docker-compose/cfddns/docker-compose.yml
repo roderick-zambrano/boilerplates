@@ -1,0 +1,11 @@
+version: "3"
+services:
+  cfddns:
+    image: cfddns:latest
+    container_name: cfddns
+    hostname: cfddns
+    restart: unless-stopped
+    volumes:
+      - data:/config
+volumes:
+  data: {}

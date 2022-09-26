@@ -1,0 +1,14 @@
+# Docker compose version
+version = '3'
+
+[services.cfddns]
+  # Path relative to portainer data volume
+  image = "cfddns:latest"
+  container_name = "cfddns"
+  hostname = "cfddns"
+  # Docker compose arguments
+  restart = "unless-stopped"
+  volumes = [
+    "data:/config"
+  ] 
+[volumes.data]
