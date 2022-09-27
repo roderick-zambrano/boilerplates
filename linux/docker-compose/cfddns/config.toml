@@ -8,6 +8,7 @@ version = '3'
   hostname = "cfddns"
   # Docker compose arguments
   restart = "unless-stopped"
+  # Volume to pass config data through
   volumes = [
     "data:/config"
   ] 
