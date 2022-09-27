@@ -12,7 +12,7 @@ version = '3'
     "--entrypoints.websecure.address=:443" 
   ]
   networks = [
-    "lan"
+    "web"
   ]
   ports = [
     "80:80",
@@ -24,13 +24,13 @@ version = '3'
   ]
   labels = [
     "traefik.enable=true",
-    'traefik.http.routers.api.rule=Host(`traefik.local`)',
+    'traefik.http.routers.api.rule=Host(`traefik.web`)',
     "traefik.http.routers.api.service=api@internal",
     "traefik.http.routers.api.entrypoints=web,websecure"
   ]
 # This section must be top level to enable exposing network.
 [networks]
-  lan.external = true
+  web.external = true
 # [serversTransport]
 #   insecureSkipVerify = true
 

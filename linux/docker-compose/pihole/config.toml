@@ -10,7 +10,13 @@ version = '3'
     "53:53/tcp",
     "53:53/udp",
     "67:67/udp",
+    "853:853/tcp",
     "8001:80/tcp"
+  ]
+  labels = [
+    "traefik.enable: true",
+    'traefik.http.routers.pihole.entrypoints: "websecure"',
+    'traefik.http.routers.pihole.rule: (Host(`pihole.lan`) && Path(`/pihole`)',
   ]
   dns = [
     "127.0.0.1", # local host
@@ -23,6 +29,9 @@ version = '3'
     "./etc-pihole:/etc/pihole",
     "./etc-dnsmasq.d:/etc/dnsmasq.d"
   ]
+  networks = [
+    "lan"
+  ]
   cap_add = [
     "NET_ADMIN"
   ]
@@ -30,4 +39,5 @@ version = '3'
   # Dependencies for Pi-hole configuration.
 [services.pihole.environment]
   TZ = "America/Panama"
-  WEBPASSWORD = "" # Add password in production environment.
+[networks]
+  lan.external = true
