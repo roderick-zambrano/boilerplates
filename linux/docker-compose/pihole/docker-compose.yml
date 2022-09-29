@@ -1,0 +1,35 @@
+version: "3"
+services:
+  pihole:
+    container_name: pihole
+    hostname: pihole
+    image: pihole/pihole:latest
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 853:853/tcp
+      - 8001:80/tcp
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.pihole.entrypoints=web,websecure
+      - traefik.http.routers.pihole.rule=(Host(`pihole.olympos`) && Path(`/pihole`))
+    dns:
+      - 127.0.0.1
+      - 149.112.112.112
+      - 9.9.9.9
+      - 1.1.1.1
+      - 8.8.8.8
+    volumes:
+      - ./etc-pihole:/etc/pihole
+      - ./etc-dnsmasq.d:/etc/dnsmasq.d
+    networks:
+      - web
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    environment:
+      TZ: America/Panama
+networks:
+  web:
+    external: true
