@@ -35,3 +35,11 @@ To disable the VPN, simply run the following command:
 ```bash
 wg-quick down wg0
 ```
+
+## Troubleshooting
+
+It is possible that the Wireguard client on some Linux distros might present issues. One of the solutions is to change the `wg0.conf` file on the client to reduce the MTUs and add certain iptables rules. The one that works for me is a simple reset of the wireguard service, with the following command:
+
+```bash
+sudo systemctl restart wg-quick@wg0.service
+```
