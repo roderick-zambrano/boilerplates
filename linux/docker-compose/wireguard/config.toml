@@ -1,0 +1,33 @@
+version = "3"
+[services]
+[services.wireguard]
+image = "linuxserver/wireguard"
+container_name = "wireguard"
+cap_add = [
+  "NET_ADMIN",
+  "SYS_MODULE"
+]
+ports = [
+  "51820:51820/udp"
+]
+sysctls = [
+  "net.ipv4.conf.all.src_valid_mark=1"
+]
+restart = "unless-stopped"
+[[services.wireguard.volumes]]
+type = "volume"
+source = "wireguard_data"
+target = "/config"
+[[services.wireguard.volumes]]
+type = "volume"
+target = "/lib/modules"
+[services.wireguard.environment]
+  PUID = 1000
+  GUID = 1000
+  TZ = "America/Panama"
+  SERVERURL="olympos"
+  SERVERPORT=51820
+  PEERS=1
+  PEERDNS="auto"
+  INTERNAL_SUBNET="10.13.13.0"
+[volumes.wireguard_data]
