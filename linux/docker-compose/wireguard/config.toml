@@ -16,10 +16,11 @@ sysctls = [
 restart = "unless-stopped"
 [[services.wireguard.volumes]]
 type = "volume"
-source = "wireguard_data"
+source = "data"
 target = "/config"
 [[services.wireguard.volumes]]
-type = "volume"
+type = "bind"
+source = "/lib/modules"
 target = "/lib/modules"
 [services.wireguard.environment]
   PUID = 1000
@@ -30,4 +31,4 @@ target = "/lib/modules"
   PEERS=1
   PEERDNS="auto"
   INTERNAL_SUBNET="10.13.13.0"
-[volumes.wireguard_data]
+[volumes.data]
