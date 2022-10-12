@@ -6,6 +6,8 @@ services:
     hostname: cfddns
     restart: unless-stopped
     volumes:
-      - data:/config
+      - type: volume
+        source: data
+        target: /config
 volumes:
   data: {}
