@@ -1,49 +1,75 @@
 # Traefik configuration TOML file.
-version = '3'
+version = "3.4"
 
 [services.traefik]
-  image = "traefik:latest"
-  container_name = "traefik"
-  restart = "unless-stopped"
-  security_opt = [
-    "no-new-privileges:true"
-  ]
-  networks = [
-    "web"
-  ]
-  ports = [
-    "80:80",
-    "443:443"
-  ]
-  environment = [
-    "CF_API_EMAIL=user@example.com", # Change to registered Cloudflare account email
-    "CF_DNS_API_TOKEN=API_TOKEN"     # Set Cloudflare account API token
-    # If using a KEY instead of a TOKEN, replace with "CF_DNS_API_KEY"
-  ]
-  volumes = [
-    "/etc/localtime:/etc/localtime:ro",
-    "/var/run/docker.sock:/var/run/docker.sock:ro",
-    "/home/username/traefik/data/traefik.yml:/traefik.yml:ro",
-    "/home/username/traefik/data/acme.json:/acme.json",
-    "/home/username/traefik/data/config.yml:/config.yml:ro"
-  ]
-  labels = [
-    "traefik.enable=true",
-    "traefik.http.routers.traefik.entrypoints=http",
-    "traefik.http.routers.traefik.rule=Host(`traefik-dashboard.local.example.com`)",        # Change to your own domain name
-    "traefik.http.middlewares.traefik-auth.basicauth.users=USER:BASIC_AUTH_PASSWORD",       # Secure traefik dashboard creating user with password access
-    "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https",
-    "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https",
-    "traefik.http.routers.traefik.middlewares=traefik-https-redirect",
-    "traefik.http.routers.traefik-secure.entrypoints=https",
-    "traefik.http.routers.traefik-secure.rule=Host(`traefik-dashboard.local.example.com`)", # Change to your own domain name
-    "traefik.http.routers.traefik-secure.middlewares=traefik-auth",
-    "traefik.http.routers.traefik-secure.tls=true",
-    "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare",
-    "traefik.http.routers.traefik-secure.tls.domains[0].main=local.example.com",            # Change to your own domain name
-    "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.local.example.com",          # Change to your own domain name
-    "traefik.http.routers.traefik-secure.service=api@internal"
-  ]
+image = "traefik:latest"
+container_name = "traefik"
+network_mode = "host"
+restart = "unless-stopped"
+command = [
+  "--api.insecure=true",
+  "--providers.docker=true",
+  "--providers.docker.exposedbydefault=false",
+  "--providers.file.directory=/etc/traefik/conf",
+  "--providers.file.watch=true",
+  "--entrypoints.web.address=:80",
+  "--entryPoints.web.http.redirections.entryPoint.to=websecure",
+  "--entryPoints.web.http.redirections.entryPoint.scheme=https",
+  "--entrypoints.websecure.address=:443",
+  "--log.level=info",
+  "--serversTransport.insecureSkipVerify=true",
+#
+  "--certificatesresolvers.cloudflare.acme.dnschallenge=true",
+  "--certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare",
+  "--certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53",
+  "--certificatesresolvers.cloudflare.acme.caserver=https://acme-v02.api.letsencrypt.org/directory",
+  "--certificatesresolvers.cloudflare.acme.email=email@example.com",
+  "--certificatesresolvers.cloudflare.acme.KeyType=EC256",
+  "--certificatesresolvers.cloudflare.acme.storage=/letsencrypt/acme.json",
+#
+  "--certificatesresolvers.cloudflare-staging.acme.dnschallenge=true",
+  "--certificatesresolvers.cloudflare-staging.acme.dnschallenge.provider=cloudflare",
+  "--certificatesresolvers.cloudflare-staging.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53",
+  "--certificatesresolvers.cloudflare-staging.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory",
+  "--certificatesresolvers.cloudflare-staging.acme.email=email@example.com",
+  "--certificatesresolvers.cloudflare-staging.acme.KeyType=EC256",
+  "--certificatesresolvers.cloudflare-staging.acme.storage=/letsencrypt/acme.json",
+#
+  "--certificatesresolvers.alpn.acme.tlsChallenge=true",
+  "--certificatesresolvers.alpn.acme.caserver=https://acme-v02.api.letsencrypt.org/directory",
+  "--certificatesresolvers.alpn.acme.email=email@example.com",
+  "--certificatesresolvers.alpn.acme.KeyType=EC256",
+  "--certificatesresolvers.alpn.acme.storage=/letsencrypt/acme.json",
+#
+  "--certificatesresolvers.alpn-staging.acme.tlsChallenge=true",
+  "--certificatesresolvers.alpn-staging.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory",
+  "--certificatesresolvers.alpn-staging.acme.email=email@example.com",
+  "--certificatesresolvers.alpn-staging.acme.KeyType=EC256",
+  "--certificatesresolvers.alpn-staging.acme.storage=/letsencrypt/acme.json"
+]
+environment = [
+  "CLOUDFLARE_EMAIL=email@example.com",
+  "CLOUDFLARE_API_KEY=INSERT_CF_API_KEY_HERE" # Replace with your CF API key.
+]
+[[services.traefik.volumes]]
+type = "volume"
+source = "letsencrypt"
+target = "/letsencrypt"
+[[services.traefik.volumes]]
+type = "bind"
+source = "/var/run/docker.sock"
+target = "/var/run/docker.sock"
+read_only = true
+[[services.traefik.volumes]]
+type = "volume"
+source = "conf"
+target = "/etc/traefik/conf"
+read_only = true
+[[services.traefik.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
 
-[networks.proxy]
-  external = true
+[volumes.letsencrypt]
+[volumes.conf]

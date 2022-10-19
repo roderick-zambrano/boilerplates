@@ -1,25 +1,65 @@
-version: "3"
+version: "3.4"
 services:
-  reverse-proxy:
-    image: traefik:v2.8
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    network_mode: host
+    restart: unless-stopped
     command:
-      - --providers.docker
       - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.file.directory=/etc/traefik/conf
+      - --providers.file.watch=true
       - --entrypoints.web.address=:80
+      - --entryPoints.web.http.redirections.entryPoint.to=websecure
+      - --entryPoints.web.http.redirections.entryPoint.scheme=https
       - --entrypoints.websecure.address=:443
-    networks:
-      - lan
-    ports:
-      - 80:80
-      - 443:443
-      - 8080:8080
+      - --log.level=info
+      - --serversTransport.insecureSkipVerify=true
+      - --certificatesresolvers.cloudflare.acme.dnschallenge=true
+      - --certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53
+      - --certificatesresolvers.cloudflare.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.cloudflare.acme.email=email@example.com
+      - --certificatesresolvers.cloudflare.acme.KeyType=EC256
+      - --certificatesresolvers.cloudflare.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.cloudflare-staging.acme.dnschallenge=true
+      - --certificatesresolvers.cloudflare-staging.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.cloudflare-staging.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53
+      - --certificatesresolvers.cloudflare-staging.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.cloudflare-staging.acme.email=email@example.com
+      - --certificatesresolvers.cloudflare-staging.acme.KeyType=EC256
+      - --certificatesresolvers.cloudflare-staging.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.alpn.acme.tlsChallenge=true
+      - --certificatesresolvers.alpn.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.alpn.acme.email=email@example.com
+      - --certificatesresolvers.alpn.acme.KeyType=EC256
+      - --certificatesresolvers.alpn.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.alpn-staging.acme.tlsChallenge=true
+      - --certificatesresolvers.alpn-staging.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.alpn-staging.acme.email=email@example.com
+      - --certificatesresolvers.alpn-staging.acme.KeyType=EC256
+      - --certificatesresolvers.alpn-staging.acme.storage=/letsencrypt/acme.json
+    environment:
+      - CLOUDFLARE_EMAIL=email@example.com
+      - CLOUDFLARE_API_KEY=INSERT_CF_API_KEY_HERE
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.api.rule=Host(`traefik.local`)
-      - traefik.http.routers.api.service=api@internal
-      - traefik.http.routers.api.entrypoints=web,websecure
-networks:
-  lan:
-    external: true
+      - type: volume
+        source: letsencrypt
+        target: /letsencrypt
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+      - type: volume
+        source: conf
+        target: /etc/traefik/conf
+        read_only: true
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+volumes:
+  letsencrypt: {}
+  conf: {}
