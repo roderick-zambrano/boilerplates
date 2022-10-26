@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  minecraft:
+    image: itzg/minecraft-server
+    container_name: vanilla_minecraft
+    ports:
+      - 25566:25565
+    environment:
+      EULA: true
+    deploy:
+      resources:
+        limits:
+          memory: 4.0G
+    volumes:
+      - type: volume
+        source: data
+        target: /data
+volumes:
+  data: {}

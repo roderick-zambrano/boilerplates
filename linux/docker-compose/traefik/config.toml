@@ -1,4 +1,4 @@
-# Traefik configuration TOML file.
+# Traefik STATIC configuration TOML file.
 version = "3.4"
 
 [services.traefik]
