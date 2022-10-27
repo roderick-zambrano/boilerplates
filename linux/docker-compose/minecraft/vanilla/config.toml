@@ -8,8 +8,7 @@ ports = [
 ]
 [services.minecraft.environment]
 EULA = true
-[services.minecraft.deploy.resources.limits]
-memory = "4.0G"
+MEMORY = "4.0G"
 [[services.minecraft.volumes]]
 type = "volume"
 source = "data"

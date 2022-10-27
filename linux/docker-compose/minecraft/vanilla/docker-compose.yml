@@ -7,10 +7,7 @@ services:
       - 25566:25565
     environment:
       EULA: true
-    deploy:
-      resources:
-        limits:
-          memory: 4.0G
+      MEMORY: 4.0G
     volumes:
       - type: volume
         source: data
