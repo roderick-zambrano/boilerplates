@@ -1,0 +1,26 @@
+version = "3.8"
+
+[services.container]
+image = "container_img_address"
+container_name = "container"
+# hostname = "container"
+# domainname = "toplevel.domain"
+ports = [
+  "80:80"
+]
+restart = "unless-stopped"
+# networks = [
+#   "customnetwork"
+# ]
+[[services.container.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.container.volumes]]
+type = "volume"
+source = "data"
+target = "/data"
+
+# [networks.customnetwork]
+# external = true
