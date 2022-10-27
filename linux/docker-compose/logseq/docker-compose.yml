@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  logseq:
+    image: ghcr.io/logseq/logseq-webapp:latest
+    container_name: logseq
+    hostname: logseq
+    ports:
+      - 3001:80
