@@ -3,6 +3,7 @@ services:
   minecraft:
     image: itzg/minecraft-server
     container_name: spigot_minecraft
+    hostname: spigot_minecraft
     ports:
       - 25565:25565
     environment:

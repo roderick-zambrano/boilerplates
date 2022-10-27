@@ -3,6 +3,7 @@ services:
   minecraft:
     image: itzg/minecraft-server
     container_name: vanilla_minecraft
+    hostname: vanilla_minecraft
     ports:
       - 25566:25565
     environment:
