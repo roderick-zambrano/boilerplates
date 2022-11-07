@@ -1,0 +1,40 @@
+version = "3.8"
+
+[services.speedtest-tracker]
+image = "ghcr.io/alexjustesen/speedtest-tracker:latest"
+container_name = "speedtest-tracker"
+ports = [
+  "8444:443"
+]
+depends_on = [
+  "db"
+]
+[services.speedtest-tracker.environment]
+PUID = 1000
+PGID = 1000
+DB_CONNECTION = "mysql"
+DB_HOST = "db"
+DB_PORT = 3306
+DB_DATABASE = "speedtest_tracker"
+DB_USERNAME = "speedy"
+DB_PASSWORD = "password"
+[[services.speedtest-tracker.volumes]]
+type = "volume"
+source = "data"
+target = "/config"
+
+[services.db]
+image = "mariadb:10"
+restart = "always"
+[services.db.environment]
+MARIADB_DATABASE = "speedtest_tracker"
+MARIADB_USER = "speedy"
+MARIADB_PASSWORD = "password"
+MARIADB_RANDOM_ROOT_PASSWORD = "true"
+[[services.db.volumes]]
+type = "volume"
+source = "db"
+target = "/var/lib/mysql"
+
+[volumes.data]
+[volumes.db]
