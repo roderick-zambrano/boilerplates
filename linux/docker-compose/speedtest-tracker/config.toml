@@ -22,9 +22,14 @@ DB_PASSWORD = "password"
 type = "volume"
 source = "data"
 target = "/config"
+[[services.speedtest-tracker.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
 
 [services.db]
 image = "mariadb:10"
+container_name = "speedtest-db"
 restart = "always"
 [services.db.environment]
 MARIADB_DATABASE = "speedtest_tracker"
