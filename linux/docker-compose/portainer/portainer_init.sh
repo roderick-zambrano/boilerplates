@@ -1,5 +1,6 @@
 #!/bin/bash
 
+docker stop portainer
 docker volume create portainer_data # Without volume creation, docker run will fail.
 docker rm portainer # Remove previous instance of portainer if any
 # Docker compose makes portainer lose authority over its own container. `docker run` exec avoids this.
