@@ -9,7 +9,7 @@ ports = [
 ]
 [services.minecraft.environment]
 EULA = true
-MEMORY = "4G"
+MEMORY = "6G"
 TYPE = "SPIGOT"
 [[services.minecraft.volumes]]
 type = "volume"
