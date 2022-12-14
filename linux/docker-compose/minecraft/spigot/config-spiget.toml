@@ -1,0 +1,28 @@
+version = "3.8"
+
+[services.minecraft]
+image = "itzg/minecraft-server"
+container_name = "spigot_minecraft"
+hostname = "spigot_minecraft"
+ports = [
+  "25565:25565"
+]
+[services.minecraft.environment]
+EULA = true
+MEMORY = "6G"
+TYPE = "SPIGOT"
+# Spiget resource references:
+# SkinRestorer: 2124
+# LuckPerms: 27140
+# SmoothTimber: 39965
+# PlayerWarps: 66692
+# RoseStacker: 82729
+# Inventory Rollback Plus: 85811
+# GPSPathfinder: 104961
+SPIGET_RESOURCES = "2124,28140,39965,66692,82729,85811,104961"
+[[services.minecraft.volumes]]
+type = "volume"
+source = "data"
+target = "/data"
+
+[volumes.data]
