@@ -4,7 +4,7 @@ Local (machine-dependent) knowledgebase utility with nice graph view.
 
 ## Setup
 
-To allow FileSystem Access API usage from supporting servers, it is necessary to complete the following steps:
+To allow FileSystem Access API usage from supporting browsers, it is necessary to complete the following steps:
 
 Download/Install/Build `mkcert`. In my case, I needed to download some dependencies (`golang` and `nss-tools` for AlmaLinux) and then I cloned the repo to build it myself.
 
