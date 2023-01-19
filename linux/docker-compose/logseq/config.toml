@@ -5,12 +5,24 @@ image = "ghcr.io/logseq/logseq-webapp:latest"
 container_name = "logseq"
 hostname = "logseq"
 ports = [
-  "3001:80"
+  "3443:443"
 ]
 
-# [[services.logseq.volumes]]
-# type = "volume"
-# source = "data"
-# target  = "/data"
+[[services.logseq.volumes]]
+type = "volume"
+source = "data"
+target  = "/data"
 
-# [volumes.data]
+[[services.logseq.volumes]]
+type = "volume"
+source = "certs"
+target = "/etc/nginx/certs"
+
+[[services.logseq.volumes]]
+type = "volume"
+source = "nginx_conf"
+target = "/etc/nginx/conf.d"
+
+[volumes.data]
+[volumes.certs]
+[volumes.nginx_conf]

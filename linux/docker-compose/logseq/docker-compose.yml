@@ -5,4 +5,18 @@ services:
     container_name: logseq
     hostname: logseq
     ports:
-      - 3001:80
+      - 3443:443
+    volumes:
+      - type: volume
+        source: data
+        target: /data
+      - type: volume
+        source: certs
+        target: /etc/nginx/certs
+      - type: volume
+        source: nginx_conf
+        target: /etc/nginx/conf.d
+volumes:
+  data: {}
+  certs: {}
+  nginx_conf: {}
