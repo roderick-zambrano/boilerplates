@@ -7,11 +7,7 @@ hostname = "logseq"
 ports = [
   "3443:443"
 ]
-
-[[services.logseq.volumes]]
-type = "volume"
-source = "data"
-target  = "/data"
+restart = "always"
 
 [[services.logseq.volumes]]
 type = "volume"

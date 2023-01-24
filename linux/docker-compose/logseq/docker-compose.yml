@@ -6,10 +6,8 @@ services:
     hostname: logseq
     ports:
       - 3443:443
+    restart: always
     volumes:
-      - type: volume
-        source: data
-        target: /data
       - type: volume
         source: certs
         target: /etc/nginx/certs
