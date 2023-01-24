@@ -6,6 +6,7 @@ services:
     hostname: spigot_minecraft
     ports:
       - 25565:25565
+    restart: unless-stopped
     environment:
       EULA: true
       MEMORY: 6G
