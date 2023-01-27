@@ -37,6 +37,9 @@ services:
       - type: volume
         source: db
         target: /var/lib/mysql
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
 volumes:
   data: {}
   db: {}
