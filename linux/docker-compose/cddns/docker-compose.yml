@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  cddns:
+    image: localhost:5000/cddns:latest
+    container_name: cddns
+    hostname: cddns
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: data
+        target: /config
+volumes:
+  data: {}

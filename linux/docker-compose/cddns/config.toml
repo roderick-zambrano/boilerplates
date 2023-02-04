@@ -1,0 +1,16 @@
+# Docker compose version
+version = '3.8'
+
+[services.cddns]
+# Custom image hosted in local registry
+image = "localhost:5000/cddns:latest"
+container_name = "cddns"
+hostname = "cddns"
+# Docker compose arguments
+restart = "unless-stopped"
+# Volume to pass config data through
+[[services.cddns.volumes]]
+type = "volume"
+source = "data"
+target = "/config"
+[volumes.data]
