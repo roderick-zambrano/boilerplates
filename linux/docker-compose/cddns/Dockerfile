@@ -12,4 +12,5 @@ RUN apt update && apt install librust-cargo+openssl-dev -y
 # Extract compiled cddns binary to local image
 COPY --from=builder /usr/local/cargo/bin/cddns /usr/bin
 
-CMD ["cddns", "-c", "cddns.toml", "inventory", "watch"]
+ENTRYPOINT ["cddns"]
+CMD ["-c", "cddns.toml", "inventory", "watch"]
