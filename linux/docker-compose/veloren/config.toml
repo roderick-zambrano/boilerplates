@@ -1,0 +1,43 @@
+version = "3.8"
+
+[services.veloren]
+image = "registry.gitlab.com/veloren/veloren/server-cli:weekly"
+container_name = "veloren"
+stdin_open = true
+tty = true
+# hostname = "veloren"
+# domainname = "toplevel.domain"
+ports = [
+  "14004:14004",
+  "14005:14005"
+]
+restart = "on-failure:0"
+# networks = [
+#   "customnetwork"
+# ]
+environment = [ "RUST_LOG=debug,common::net=info" ]
+
+[[services.veloren.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.veloren.volumes]]
+type = "volume"
+source = "userdata"
+target = "/opt/userdata"
+
+[services.watchtower]
+image = "containrrr/watchtower"
+command = "--interval 30 --stop-timeout 130s --cleanup veloren"
+restart = "on-failure:0"
+
+[[services.watchtower.volumes]]
+type = "bind"
+source = "/var/run/docker.sock"
+target = "/var/run/docker.sock"
+
+
+# [networks.customnetwork]
+# external = true
+[volumes.userdata]
