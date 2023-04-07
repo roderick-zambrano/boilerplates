@@ -22,7 +22,7 @@ services:
       PUID: 1000
       GUID: 1000
       TZ: America/Panama
-      SERVERURL: olympos
+      SERVERURL: domain.name
       SERVERPORT: 51820
       PEERS: 2
       PEERDNS: auto
