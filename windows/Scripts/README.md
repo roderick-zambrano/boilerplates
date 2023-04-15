@@ -15,5 +15,5 @@
     - AdditionalLayouts: array
   - Output Type: None
   - Description: 
-    Parameterized function (with default "en-US" input locale) to overwrite Current User Keyboard Layouts. Accepted parameters are all Microsoft accepted input profiles (input locales), "en-US" as a default and a reference.
+    Parameterized function (with default "en-US" input locale) to overwrite Current User Keyboard Layouts. Accepted parameters are all Microsoft accepted input profiles (input locales), "en-US" as a default and a reference. At time of creation does not work with PowerShell versions above 5.x.
 
