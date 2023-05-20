@@ -8,11 +8,12 @@ services:
       - spigot_minecraft
     ports:
       - 25565:25565
+      - 8081:8080
     environment:
       EULA: true
       MEMORY: 6G
       TYPE: SPIGOT
-      SPIGET_RESOURCES: 2124,19286,28140,39965,59773,82729,85811
+      SPIGET_RESOURCES: 2124,19286,28140,34229,39965,59773,82729,85811,109697
     volumes:
       - type: volume
         source: data
