@@ -4,16 +4,23 @@ services:
     image: itzg/minecraft-server
     container_name: spigot_minecraft
     hostname: spigot_minecraft
+    networks:
+      - spigot_minecraft
     ports:
       - 25565:25565
+      - 8081:8080
     restart: unless-stopped
     environment:
       EULA: true
       MEMORY: 6G
       TYPE: SPIGOT
+      SPIGET_RESOURCES: 2124,19286,28140,34229,39965,59773,82729,85811,109697
     volumes:
       - type: volume
         source: data
         target: /data
 volumes:
   data: {}
+networks:
+  spigot_minecraft:
+    external: false

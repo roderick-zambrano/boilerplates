@@ -1,7 +1,7 @@
-version: "3"
+version: "3.8"
 services:
   wireguard:
-    image: linuxserver/wireguard
+    image: linuxserver/wireguard:latest
     container_name: wireguard
     cap_add:
       - NET_ADMIN
@@ -18,13 +18,16 @@ services:
       - type: bind
         source: /lib/modules
         target: /lib/modules
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
     environment:
       PUID: 1000
-      GUID: 1000
+      PGID: 1000
       TZ: America/Panama
       SERVERURL: domain.name
       SERVERPORT: 51820
-      PEERS: 2
+      PEERS: 7
       PEERDNS: auto
       INTERNAL_SUBNET: 10.13.13.0
 volumes:
