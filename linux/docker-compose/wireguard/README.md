@@ -46,4 +46,4 @@ It is possible that the Wireguard client on some Linux distros might present iss
 sudo systemctl restart wg-quick@wg0.service
 ```
 
-It is possible that after an update, the container might break. In cases like these, it's possible to use the image tag `legacy` for compatibility until the issue is fixed in a further update.
+In respect to the container, since wireguard is not designed to natively run in a containerized environment, some updates might break its functionality. In cases like these, it is advised to use the `legacy` tag of the container until it is fixed.
