@@ -1,0 +1,24 @@
+version = "3.9"
+
+[services.cloudflare-ddns]
+image = "timothyjmiller/cloudflare-ddns:latest"
+container_name = "cloudflare-ddns"
+network_mode = "host"
+restart = "unless-stopped"
+security_opt = [
+  "no-new-privileges:true"
+]
+[services.cloudflare-ddns.environment]
+PUID = 1000
+GUID = 1000
+[[services.cloudflare-ddns.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.cloudflare-ddns.volumes]]
+type = "bind"
+source = "/var/lib/docker/volumes/cloudflare-ddns_data/_data/config.json"
+target = "/config.json"
+# [volumes]
+# [volumes.data]
