@@ -4,7 +4,7 @@ FROM rustlang/rust:nightly-slim as builder
 RUN apt update && apt install librust-cargo+openssl-dev -y && cargo +nightly install cddns
 
 # Lighter debian image
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 # Working directory to be bound to volume on host machine
 WORKDIR /config
 # Download necessary library for cddns execution, including SSL certificate handling
