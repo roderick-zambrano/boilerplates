@@ -1,7 +1,8 @@
-version = "3"
+version = "3.8"
+
 [services]
 [services.wireguard]
-image = "linuxserver/wireguard"
+image = "linuxserver/wireguard:latest"
 container_name = "wireguard"
 cap_add = [
   "NET_ADMIN",
@@ -14,21 +15,36 @@ sysctls = [
   "net.ipv4.conf.all.src_valid_mark=1"
 ]
 restart = "unless-stopped"
+
+# [[services.wireguard.volumes]]
+# type = "bind"
+# source = "/var/lib/docker/volumes/wireguard_data/_data"
+# target = "/config"
+
 [[services.wireguard.volumes]]
 type = "volume"
 source = "data"
 target = "/config"
+
 [[services.wireguard.volumes]]
 type = "bind"
 source = "/lib/modules"
 target = "/lib/modules"
+
+[[services.wireguard.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+
 [services.wireguard.environment]
-  PUID = 1000
-  GUID = 1000
-  TZ = "America/Panama"
-  SERVERURL="olympos"
-  SERVERPORT=51820
-  PEERS=2
-  PEERDNS="auto"
-  INTERNAL_SUBNET="10.13.13.0"
+PUID = 1000
+PGID = 1000
+TZ = "America/Panama"
+SERVERURL = "domain.name"
+SERVERPORT = 51820
+PEERS = 7
+PEERDNS = "auto"
+INTERNAL_SUBNET = "10.13.13.0"
+
+[volumes]
 [volumes.data]
