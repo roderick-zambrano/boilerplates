@@ -1,4 +1,4 @@
-version = "3.8"
+version = "3.9"
 
 [services.minecraft]
 image = "itzg/minecraft-server"
@@ -21,21 +21,29 @@ TYPE = "SPIGOT"
 # Elevators: 34229
 # SmoothTimber: 39965
 # ChestSort: 59773
+# Criticals: 78906
 # RoseStacker: 82729
+# RHLeafDecay: 83581
 # Inventory Rollback Plus: 85811
 # GPSPathfinder: 104961 X
-# Pl3xmap: 109697 (default requires exposing port 8080)
-# External resource references:
+# External resource references (Manual installation):
+# ProtocolLib: 1997
 # CoreProtect 8631
-SPIGET_RESOURCES = "2124,19286,28140,34229,39965,59773,82729,85811,109697"
+# InteractionVisualizer: 77050
+# Pl3xmap: 109697 (default requires exposing port 8080)
+SPIGET_RESOURCES = "2124,19286,28140,34229,39965,59773,78906,82729,83581,85811"
 [[services.minecraft.volumes]]
 type = "volume"
 source = "data"
 target = "/data"
+[[services.minecraft.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
 
 [volumes]
 [volumes.data]
 
 [networks]
 [networks.spigot_minecraft]
-external = false
+external = true # This network is configured outside of this image to improve control over IP addressing.
