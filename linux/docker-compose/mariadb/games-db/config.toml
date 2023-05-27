@@ -1,0 +1,33 @@
+version = "3.9"
+
+[services.games-db]
+image = "mariadb:latest"
+container_name = "games-db"
+hostname = "games-db"
+ports = [
+  "3307:3306"
+]
+restart = "unless-stopped"
+networks = [
+  "spigot_minecraft"
+]
+[services.games-db.environment]
+PUID = 1000
+PGID = 1000
+MARIADB_DATABASE = "games_db"
+MARIADB_USER = "username"
+MARIADB_PASSWORD = "password"
+MARIADB_ROOT_PASSWORD = "pass"
+[[services.games-db.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.games-db.volumes]]
+type = "volume"
+source = "data"
+target = "/var/lib/mysql"
+
+[networks.spigot_minecraft]
+external = true
+[volumes.data]
