@@ -14,6 +14,8 @@ services:
       EULA: true
       MEMORY: 6G
       TYPE: SPIGOT
+      VERSION: 1.19.4
+      TZ: America/Panama
       SPIGET_RESOURCES: 2124,19286,28140,34229,39965,59773,78906,82729,83581,85811
     volumes:
       - type: volume
