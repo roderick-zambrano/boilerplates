@@ -19,6 +19,7 @@ services:
       DATABASE_URL: mysql://kanboard:user-password@db/kanboard
   db:
     image: mariadb:10.9
+    container_name: kanboard-db
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - type: volume
