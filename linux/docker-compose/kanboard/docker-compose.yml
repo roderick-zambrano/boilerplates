@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  kanboard:
+    image: kanboard/kanboard:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - type: volume
+        source: kanboard_data
+        target: /var/www/app/data
+      - type: volume
+        source: kanboard_plugins
+        target: /var/www/app/plugins
+      - type: volume
+        source: kanboard_ssl
+        target: /etc/nginx/ssl
+    environment:
+      DATABASE_URL: mysql://kanboard:user-password@db/kanboard
+  db:
+    image: mariadb:10.9
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - type: volume
+        source: db
+        target: /var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root-pw
+      MYSQL_DATABASE: kanboard
+      MYSQL_USER: kanboard
+      MYSQL_PASSWORD: user-password
+volumes:
+  kanboard_data: {}
+  kanboard_plugins: {}
+  kanboard_ssl: {}
+  db: {}

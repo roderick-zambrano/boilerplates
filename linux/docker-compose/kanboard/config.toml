@@ -1,0 +1,41 @@
+version = "3.9"
+
+[services]
+[services.kanboard]
+image = "kanboard/kanboard:latest"
+ports = [
+  "80:80",
+  "443:443"
+]
+
+[[services.kanboard.volumes]]
+type = "volume" 
+source = "kanboard_data"
+target = "/var/www/app/data"
+[[services.kanboard.volumes]]
+type = "volume"
+source = "kanboard_plugins"
+target = "/var/www/app/plugins"
+[[services.kanboard.volumes]]
+type = "volume"
+source = "kanboard_ssl"
+target = "/etc/nginx/ssl"
+[services.kanboard.environment]
+DATABASE_URL = "mysql://kanboard:user-password@db/kanboard"
+[services.db]
+image = "mariadb:10.9"
+command = "--default-authentication-plugin=mysql_native_password"
+[[services.db.volumes]]
+type = "volume"
+source = "db"
+target = "/var/lib/mysql"
+[services.db.environment]
+MYSQL_ROOT_PASSWORD = "root-pw"
+MYSQL_DATABASE = "kanboard"
+MYSQL_USER = "kanboard"
+MYSQL_PASSWORD = "user-password"
+
+[volumes.kanboard_data]
+[volumes.kanboard_plugins]
+[volumes.kanboard_ssl]
+[volumes.db]
