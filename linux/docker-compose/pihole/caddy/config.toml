@@ -1,0 +1,58 @@
+version = "3.9"
+
+[services]
+[services.caddy]
+container_name = "caddy"
+image = "caddy:latest"
+networks = ["caddy_net"]
+restart = "unless-stopped"
+ports = ["80:80", "443:443", "443:443/udp"]
+[[services.caddy.volumes]]
+type = "volume"
+source = "caddy_etc"
+target = "/etc/caddy"
+[[services.caddy.volumes]]
+type = "volume"
+source = "caddy_data"
+target = "/data"
+[[services.caddy.volumes]]
+type = "volume"
+source = "caddy_config"
+target = "/config"
+
+[services.pihole-dns]
+depends_on = ["caddy"]
+hostname = "pihole-dns"
+container_name = "pihole-dns"
+image = "pihole/pihole:latest"
+networks = ["caddy_net"]
+ports = ["8081:80/tcp", "53:53/udp", "53:53/tcp", "853:853/tcp"]
+restart = "unless-stopped"
+[services.pihole-dns.environment]
+TZ = "America/Panama"
+WEBPASSWORD = "password"
+[[services.pihole-dns.volumes]]
+type = "volume"
+source = "pihole_etc"
+target = "/etc/pihole"
+[[services.pihole-dns.volumes]]
+type = "volume"
+source = "dnmasq_etc"
+target = "/etc/dnsmasq.d"
+[[services.pihole-dns.volumes]]
+type = "volume"
+source = "lighttpd_etc"
+target = "/etc/lighttpd/external.conf"
+
+[networks]
+[networks.caddy_net]
+driver = "bridge"
+name = "caddy_net"
+
+[volumes]
+[volumes.caddy_etc]
+[volumes.caddy_data]
+[volumes.caddy_config]
+[volumes.pihole_etc]
+[volumes.dnmasq_etc]
+[volumes.lighttpd_etc]
