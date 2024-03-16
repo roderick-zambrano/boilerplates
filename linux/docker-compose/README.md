@@ -10,6 +10,6 @@ These compose files are meant to facilitate Stack creation in Portainer.
 
 Some directories might include additional files required for setup, be it ENV files with examples, or assistive scripts, among other things.
 
-# TOML Reference
+## TOML Reference
 
-TODO: TOML to YAML visual converstion guide
+TODO: TOML to YAML visual conversion guide
