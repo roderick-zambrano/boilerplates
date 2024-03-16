@@ -2,6 +2,7 @@
 
 # A copy of this file exists in /etc/cron for easier access from root user.
 
+echo "Backing up relevant Minecraft data..."
 # Facilitating location variables, absolute paths
 root_folder=/var/lib/docker/volumes/spigot_minecraft_data/_data
 destination=$root_folder/backups/
@@ -20,5 +21,10 @@ while [ $success = false ]; do
   BZIP2=-9 tar icjf $filename -C $root_folder $world $nether $end
   if [ $? -eq 0 ]; then
     success=true
+  else
+    echo "Failed script execution. Retrying."
   fi
 done
+
+echo "Script executed successfully."
+
