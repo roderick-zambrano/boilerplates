@@ -1,0 +1,19 @@
+version = "3.9"
+
+[services]
+[services.uptime-kuma]
+container_name = "uptime-kuma"
+image = "louislam/uptime-kuma:latest"
+restart = "always"
+ports = ["3001:3001"]
+[[services.uptime-kuma.volumes]]
+type = "volume"
+source = "uptime-kuma"
+target = "/app/data"
+[[services.uptime-kuma.volumes]]
+type = "bind"
+source = "/var/run/docker.sock"
+target = "/var/run/docker.sock"
+[volumes.uptime-kuma]
+
+[networks]
