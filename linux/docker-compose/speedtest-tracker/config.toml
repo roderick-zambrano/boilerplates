@@ -3,6 +3,7 @@ version = "3.8"
 [services.speedtest-tracker]
 image = "ghcr.io/alexjustesen/speedtest-tracker:latest"
 container_name = "speedtest-tracker"
+hostname = "speedtest-tracker"
 ports = [
   "8444:443"
 ]
@@ -19,6 +20,7 @@ DB_PORT = 3306
 DB_DATABASE = "speedtest_tracker"
 DB_USERNAME = "speedy"
 DB_PASSWORD = "password"
+APP_KEY = "" # To generate, drop into container shell, copy raw result from php artisan key:generate --show
 [[services.speedtest-tracker.volumes]]
 type = "volume"
 source = "data"
