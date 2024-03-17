@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  nginx_proxy_manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx_proxy_manager
+    hostname: nginx_proxy_manager
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+      - type: volume
+        source: data
+        target: /data
+      - type: volume
+        source: letsencrypt
+        target: /etc/letsencrypt
+      - type: bind
+        source: /etc/hosts
+        target: /etc/hosts
+volumes:
+  data: {}
+  letsencrypt: {}
