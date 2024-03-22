@@ -2,13 +2,11 @@ version: "3.9"
 services:
   minecraft:
     image: itzg/minecraft-server
-    container_name: spigot_minecraft
-    hostname: spigot_minecraft
+    container_name: spigot-minecraft
+    hostname: spigot-minecraft
     networks:
       - spigot_minecraft
-    ports:
-      - 25565:25565
-      - 8081:8080
+      - games-db
     restart: unless-stopped
     environment:
       EULA: true
@@ -29,4 +27,6 @@ volumes:
   data: {}
 networks:
   spigot_minecraft:
+    external: true
+  games_db:
     external: true

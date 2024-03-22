@@ -2,13 +2,16 @@ version = "3.9"
 
 [services.minecraft]
 image = "itzg/minecraft-server"
-container_name = "spigot_minecraft"
-hostname = "spigot_minecraft"
-networks = ["spigot_minecraft"]
-ports = [
-  "25565:25565",
-  "8081:8080" # For Pl3xmap
+container_name = "spigot-minecraft"
+hostname = "spigot-minecraft"
+networks = [
+  "spigot_minecraft",
+  "games-db"
 ]
+# ports = [
+#   "25565:25565",
+#   "8081:8080" # For Pl3xmap
+# ]
 restart = "unless-stopped"
 [services.minecraft.environment]
 EULA = true
@@ -49,4 +52,6 @@ read_only = true
 
 [networks]
 [networks.spigot_minecraft]
-external = true # This network is configured outside of this image to improve control over IP addressing.
+external = true
+[networks.games_db]
+external = true
