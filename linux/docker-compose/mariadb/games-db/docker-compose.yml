@@ -4,11 +4,9 @@ services:
     image: mariadb:latest
     container_name: games-db
     hostname: games-db
-    ports:
-      - 3307:3306
     restart: unless-stopped
     networks:
-      - spigot_minecraft
+      - games-db
     environment:
       PUID: 1000
       PGID: 1000
@@ -24,8 +22,8 @@ services:
       - type: volume
         source: data
         target: /var/lib/mysql
-networks:
-  spigot_minecraft:
-    external: true
 volumes:
   data: {}
+networks:
+  games-db:
+    external: true
