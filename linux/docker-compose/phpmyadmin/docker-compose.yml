@@ -2,12 +2,16 @@ version: "3.9"
 services:
   phpmyadmin:
     image: phpmyadmin
+    security_opt:
+      - no-new-privileges:true
     container_name: phpmyadmin
-    ports:
-      - 8082:80
-    restart: unless-stopped
+    hostname: phpmyadmin
     networks:
-      - network
+      - games_db
+      - kanboard
+      - speedtest_tracker
+      - phpmyadmin
+    restart: unless-stopped
     environment:
       PMA_ARBITRARY: 1
     volumes:
@@ -16,5 +20,11 @@ services:
         target: /etc/localtime
         read_only: true
 networks:
-  network:
-    external: false
+  games_db:
+    external: true
+  kanboard:
+    external: true
+  speedtest_tracker:
+    external: true
+  phpmyadmin:
+    external: true

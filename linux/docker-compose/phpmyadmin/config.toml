@@ -2,14 +2,19 @@ version = "3.9"
 
 [services.phpmyadmin]
 image = "phpmyadmin"
+security_opt = [ "no-new-privileges:true" ]
 container_name = "phpmyadmin"
-ports = [
-  "8082:80"
-]
-restart = "unless-stopped"
+hostname = "phpmyadmin"
 networks = [
-  "network"
+  "games_db",
+  "kanboard",
+  "speedtest_tracker",
+  "phpmyadmin"
 ]
+# ports = [
+#   "8082:80"
+# ]
+restart = "unless-stopped"
 [services.phpmyadmin.environment]
 PMA_ARBITRARY = 1
 [[services.phpmyadmin.volumes]]
@@ -18,5 +23,11 @@ source = "/etc/localtime"
 target = "/etc/localtime"
 read_only = true
 
-[networks.network]
-external = false
+[networks.games_db]
+external = true
+[networks.kanboard]
+external = true
+[networks.speedtest_tracker]
+external = true
+[networks.phpmyadmin]
+external = true
