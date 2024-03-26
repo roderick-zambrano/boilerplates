@@ -1,10 +1,13 @@
-version: "3.8"
+version: "3.9"
 services:
   speedtest-tracker:
     image: ghcr.io/alexjustesen/speedtest-tracker:latest
+    security_opt:
+      - no-new-privileges:true
     container_name: speedtest-tracker
-    ports:
-      - 8444:443
+    hostname: speedtest-tracker
+    networks:
+      - speedtest_tracker
     restart: always
     depends_on:
       - db
@@ -17,6 +20,7 @@ services:
       DB_DATABASE: speedtest_tracker
       DB_USERNAME: speedy
       DB_PASSWORD: password
+      APP_KEY: ""
     volumes:
       - type: volume
         source: data
@@ -26,7 +30,11 @@ services:
         target: /etc/localtime
   db:
     image: mariadb:10
+    security_opt:
+      - no-new-privileges:true
     container_name: speedtest-db
+    networks:
+      - speedtest_tracker
     restart: always
     environment:
       MARIADB_DATABASE: speedtest_tracker
@@ -43,3 +51,6 @@ services:
 volumes:
   data: {}
   db: {}
+networks:
+  speedtest_tracker:
+    external: true
