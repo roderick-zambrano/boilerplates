@@ -2,11 +2,13 @@ version: "3.9"
 services:
   games-db:
     image: mariadb:latest
+    security_opt:
+      - no-new-privileges:true
     container_name: games-db
     hostname: games-db
     restart: unless-stopped
     networks:
-      - games-db
+      - games_db
     environment:
       PUID: 1000
       PGID: 1000
@@ -25,5 +27,5 @@ services:
 volumes:
   data: {}
 networks:
-  games-db:
+  games_db:
     external: true
