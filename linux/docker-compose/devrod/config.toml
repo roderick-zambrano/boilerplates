@@ -1,0 +1,25 @@
+version = "3.9"
+
+[services.devrod]
+image = "nginx:latest"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "devrod"
+hostname = "devrod"
+networks = [ "devrod" ]
+# ports = [
+#   "8084:80"
+# ]
+restart = "unless-stopped"
+[[services.devrod.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.devrod.volumes]]
+type = "volume"
+source = "data"
+target = "/usr/share/nginx/html"
+
+[volumes.data]
+[networks.devrod]
+external = true
