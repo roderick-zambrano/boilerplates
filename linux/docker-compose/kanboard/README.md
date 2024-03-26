@@ -1,6 +1,6 @@
 # Kanboard
 
-For more infromation, refer to the documentation for the `itzg/minecraft-server` container.
+Kanban project management.
 
 ## Image
 
