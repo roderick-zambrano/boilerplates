@@ -1,0 +1,17 @@
+{
+  "runOnStartup": true,
+  "cronSchedule": "0 0,6,12,18 * * *",
+  "logLevel": "info",
+  "accounts": [
+    {
+      "email": "epicaccount@email.com"
+    }
+  ],
+  "notifiers": [
+    {
+      "type": "telegram",
+      "token": "########:@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+      "chatId": "##########"
+    }
+  ]
+}

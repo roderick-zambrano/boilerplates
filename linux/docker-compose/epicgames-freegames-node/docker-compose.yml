@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  epicgames-freegames-node:
+    image: ghcr.io/claabs/epicgames-freegames-node:latest
+    security_opt:
+      - no-new-privileges:true
+    container_name: epicgames-freegames-node
+    hostname: epicgames-freegames-node
+    networks:
+      - epicgames_freegames_node
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: data
+        target: /usr/app/config
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+volumes:
+  data: {}
+networks:
+  epicgames_freegames_node:
+    external: true
