@@ -2,6 +2,7 @@ version = "3.9"
 
 [services.dockge]
 image = "louislam/dockge:latest"
+security_opt = [ "no-new-privileges:true" ]
 container_name = "dockge"
 hostname = "dockge"
 # ports = [
