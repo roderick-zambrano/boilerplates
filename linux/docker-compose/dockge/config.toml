@@ -3,15 +3,14 @@ version = "3.9"
 [services.dockge]
 image = "louislam/dockge:latest"
 container_name = "dockge"
-# hostname = "container"
-# domainname = "toplevel.domain"
-ports = [
-  "5001:5001"
-]
-restart = "unless-stopped"
-# networks = [
-#   "customnetwork"
+hostname = "dockge"
+# ports = [
+#   "5001:5001"
 # ]
+restart = "unless-stopped"
+networks = [
+  "dockge"
+]
 [services.dockge.environment]
 DOCKGE_STACKS_DIR = "/opt/stacks"
 [[services.dockge.volumes]]
@@ -34,5 +33,5 @@ target = "/app/data"
 
 [volumes.data]
 
-# [networks.customnetwork]
-# external = true
+[networks.dockge]
+external = true

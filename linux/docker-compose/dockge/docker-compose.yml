@@ -3,9 +3,10 @@ services:
   dockge:
     image: louislam/dockge:latest
     container_name: dockge
-    ports:
-      - 5001:5001
+    hostname: dockge
     restart: unless-stopped
+    networks:
+      - dockge
     environment:
       DOCKGE_STACKS_DIR: /opt/stacks
     volumes:
@@ -24,3 +25,6 @@ services:
         target: /app/data
 volumes:
   data: {}
+networks:
+  dockge:
+    external: true
