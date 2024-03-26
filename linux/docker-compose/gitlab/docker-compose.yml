@@ -2,6 +2,8 @@ version: "3.9"
 services:
   gitlab:
     image: gitlab/gitlab-ce:latest
+    security_opt:
+      - no-new-privileges:true
     hostname: gitlab
     networks:
       - gitlab
