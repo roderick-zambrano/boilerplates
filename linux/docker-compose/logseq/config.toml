@@ -1,12 +1,14 @@
-version = "3.8"
+version = "3.9"
 
 [services.logseq]
 image = "ghcr.io/logseq/logseq-webapp:latest"
+security_opt = [ "no-new-privileges:true" ]
 container_name = "logseq"
 hostname = "logseq"
-ports = [
-  "3443:443"
-]
+networks = [ "logseq" ]
+# ports = [
+#   "3443:443"
+# ]
 restart = "always"
 
 [[services.logseq.volumes]]
@@ -19,6 +21,8 @@ type = "volume"
 source = "nginx_conf"
 target = "/etc/nginx/conf.d"
 
-[volumes.data]
 [volumes.certs]
 [volumes.nginx_conf]
+
+[networks.logseq]
+external = true
