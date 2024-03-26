@@ -1,14 +1,37 @@
 version: "3.9"
 services:
-  nginx_proxy_manager:
+  nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:latest
-    container_name: nginx_proxy_manager
-    hostname: nginx_proxy_manager
+    security_opt:
+      - no-new-privileges:true
+    container_name: nginx-proxy-manager
+    hostname: nginx-proxy-manager
     ports:
       - 80:80
       - 81:81
       - 443:443
+      - 21115:21115
+      - 21116:21116/udp
+      - 21117:21117
+      - 21118:21118
+      - 21119:21119
+      - 25565:25565
+      - 51820:51820
     restart: unless-stopped
+    networks:
+      - npm
+      - devrod
+      - dockge
+      - gitlab
+      - kanboard
+      - logseq
+      - ntfy
+      - passbolt
+      - phpmyadmin
+      - rustdesk
+      - speedtest_tracker
+      - spigot_minecraft
+      - wireguard
     volumes:
       - type: bind
         source: /etc/localtime
@@ -26,3 +49,30 @@ services:
 volumes:
   data: {}
   letsencrypt: {}
+networks:
+  npm:
+    external: true
+  devrod:
+    external: true
+  dockge:
+    external: true
+  gitlab:
+    external: true
+  kanboard:
+    external: true
+  logseq:
+    external: true
+  passbolt:
+    external: true
+  phpmyadmin:
+    external: true
+  ntfy:
+    external: true
+  rustdesk:
+    external: true
+  speedtest_tracker:
+    external: true
+  spigot_minecraft:
+    external: true
+  wireguard:
+    external: true

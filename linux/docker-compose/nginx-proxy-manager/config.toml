@@ -1,33 +1,53 @@
 version = "3.9"
 
-[services.nginx_proxy_manager]
+[services.nginx-proxy-manager]
 image = "jc21/nginx-proxy-manager:latest"
-container_name = "nginx_proxy_manager"
-hostname = "nginx_proxy_manager"
-# domainname = "toplevel.domain"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "nginx-proxy-manager"
+hostname = "nginx-proxy-manager"
 ports = [
   "80:80",
   "81:81",
-  "443:443"
+  "443:443",
+  "21115:21115",
+  "21116:21116",
+  "21116:21116/udp",
+  "21117:21117",
+  "21118:21118",
+  "21119:21119",
+  "25565:25565",
+  "51820:51820",
 ]
 restart = "unless-stopped"
-# networks = [
-#   "customnetwork"
-# ]
-[[services.nginx_proxy_manager.volumes]]
+networks = [
+  "npm",
+  "devrod",
+  "dockge",
+  "gitlab",
+  "kanboard",
+  "logseq",
+  "ntfy",
+  "passbolt",
+  "phpmyadmin",
+  "rustdesk",
+  "speedtest_tracker",
+  "spigot_minecraft",
+  "wireguard"
+]
+[[services.nginx-proxy-manager.volumes]]
 type = "bind"
 source = "/etc/localtime"
 target = "/etc/localtime"
 read_only = true
-[[services.nginx_proxy_manager.volumes]]
+[[services.nginx-proxy-manager.volumes]]
 type = "volume"
 source = "data"
 target = "/data"
-[[services.nginx_proxy_manager.volumes]]
+[[services.nginx-proxy-manager.volumes]]
 type = "volume"
 source = "letsencrypt"
 target = "/etc/letsencrypt"
-[[services.nginx_proxy_manager.volumes]]
+[[services.nginx-proxy-manager.volumes]]
 type = "bind"
 source = "/etc/hosts"
 target = "/etc/hosts"
@@ -35,5 +55,30 @@ target = "/etc/hosts"
 [volumes]
 [volumes.data]
 [volumes.letsencrypt]
-# [networks.customnetwork]
-# external = true
+
+[networks.npm]
+external = true
+[networks.devrod]
+external = true
+[networks.dockge]
+external = true
+[networks.gitlab]
+external = true
+[networks.kanboard]
+external = true
+[networks.logseq]
+external = true
+[networks.passbolt]
+external = true
+[networks.phpmyadmin]
+external = true
+[networks.ntfy]
+external = true
+[networks.rustdesk]
+external = true
+[networks.speedtest_tracker]
+external = true
+[networks.spigot_minecraft]
+external = true
+[networks.wireguard]
+external = true
