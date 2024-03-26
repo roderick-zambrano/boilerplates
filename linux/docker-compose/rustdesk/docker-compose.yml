@@ -1,33 +1,37 @@
-version: "3.8"
+version: "3.9"
 services:
   hbbs:
     image: rustdesk/rustdesk-server:latest
+    security_opt:
+      - no-new-privileges:true
     container_name: hbbs
+    hostname: hbbs
     command: hbbs -r example.domain.com:21117
     restart: unless-stopped
-    ports:
-      - 21115:21115
-      - 21116:21116
-      - 21116:21116/udp
-      - 21118:21118
     networks:
-      - net
+      - rustdesk
     depends_on:
       - hbbr
     volumes:
-      - ./hbbs:/root
+      - type: volume
+        source: data
+        target: /root
   hbbr:
     image: rustdesk/rustdesk-server:latest
+    security_opt:
+      - no-new-privileges:true
     container_name: hbbr
+    hostname: hbbr
     command: hbbr
     restart: unless-stopped
     networks:
-      - net
-    ports:
-      - 21117:21117
-      - 21119:21119
+      - rustdesk
     volumes:
-      - ./hbbr:/root
+      - type: volume
+        source: data
+        target: /root
 networks:
-  net:
-    external: false
+  rustdesk:
+    external: true
+volumes:
+  data: {}
