@@ -1,18 +1,27 @@
 version: "3.9"
 services:
   uptime-kuma:
-    container_name: uptime-kuma
     image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    hostname: uptime-kuma
     restart: always
-    ports:
-      - 3001:3001
+    networks:
+      - uptime_kuma
+      - npm
+      - wireguard
     volumes:
       - type: volume
-        source: uptime-kuma
+        source: data
         target: /app/data
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
 volumes:
-  uptime-kuma: {}
-networks: {}
+  data: {}
+networks:
+  uptime_kuma:
+    external: true
+  npm:
+    external: true
+  wireguard:
+    external: true
