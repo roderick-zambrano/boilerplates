@@ -4,10 +4,10 @@ services:
     image: gitlab/gitlab-ce:latest
     security_opt:
       - no-new-privileges:true
+    container_name: gitlab
     hostname: gitlab
     networks:
       - gitlab
-    container_name: gitlab
     restart: always
     shm_size: 256m
     volumes:
