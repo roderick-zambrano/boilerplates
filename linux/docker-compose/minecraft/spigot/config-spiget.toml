@@ -2,11 +2,12 @@ version = "3.9"
 
 [services.minecraft]
 image = "itzg/minecraft-server"
+security_opt = ["no-new-privileges:true"]
 container_name = "spigot-minecraft"
 hostname = "spigot-minecraft"
 networks = [
   "spigot_minecraft",
-  "games-db"
+  "games_db"
 ]
 # ports = [
 #   "25565:25565",
