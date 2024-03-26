@@ -4,11 +4,12 @@ version = "3.9"
 [services.gitlab]
 image = "gitlab/gitlab-ce:latest"
 hostname = "gitlab"
-ports = [
-  "7443:443",
-  "2222:22",
-  "8085:80"
-]
+networks = [ "gitlab" ]
+# ports = [
+#   "7443:443",
+#   "2222:22",
+#   "8085:80"
+# ]
 container_name = "gitlab"
 restart = "always"
 shm_size = "256m"
@@ -34,4 +35,5 @@ target = "/var/opt/gitlab"
 [volumes.data]
 [volumes.logs]
 
-[networks]
+[networks.gitlab]
+external = true

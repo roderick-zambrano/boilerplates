@@ -3,10 +3,8 @@ services:
   gitlab:
     image: gitlab/gitlab-ce:latest
     hostname: gitlab
-    ports:
-      - 7443:443
-      - "2222:22"
-      - 8085:80
+    networks:
+      - gitlab
     container_name: gitlab
     restart: always
     shm_size: 256m
@@ -28,4 +26,6 @@ volumes:
   config: {}
   data: {}
   logs: {}
-networks: {}
+networks:
+  gitlab:
+    external: true
