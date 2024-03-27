@@ -5,6 +5,7 @@ image = "phpmyadmin"
 security_opt = [ "no-new-privileges:true" ]
 container_name = "phpmyadmin"
 hostname = "phpmyadmin"
+domainname = "domain.name"
 networks = [
   "games_db",
   "kanboard",
