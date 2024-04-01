@@ -6,10 +6,9 @@ services:
       - no-new-privileges:true
     container_name: epicgames-freegames-node
     hostname: epicgames-freegames-node
+    domainname: domain.name
     networks:
       - epicgames_freegames_node
-    ports:
-      - 3000:3000
     restart: unless-stopped
     volumes:
       - type: volume
