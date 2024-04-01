@@ -25,3 +25,8 @@ ntfy tier add \
   --attachment-bandwidth-limit=5G \
   super
 ```
+
+The following command changes the role of a user from "user" to "admin"
+```ntfy user change-role username admin```
+
+At the moment, it seems like only Admins are capable of reserving topics, unless a specific configuration is required that is not yet evident. Admins have read and write access to every topic by default however, regardless of other reservations.
