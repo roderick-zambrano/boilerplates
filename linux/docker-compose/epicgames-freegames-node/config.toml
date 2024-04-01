@@ -6,12 +6,13 @@ image = "ghcr.io/claabs/epicgames-freegames-node:latest"
 security_opt = [ "no-new-privileges:true" ]
 container_name = "epicgames-freegames-node"
 hostname = "epicgames-freegames-node"
+domainname = "domain.name"
 networks = [
   "epicgames_freegames_node"
 ]
-ports = [
-  "3000:3000"
-]
+# ports = [
+#   "3000:3000"
+# ]
 restart = "unless-stopped"
 [[services.epicgames-freegames-node.volumes]]
 type = "volume" 
