@@ -5,7 +5,7 @@
 echo "Backing up relevant Minecraft data..."
 # Facilitating location variables, absolute paths
 root_folder=/var/lib/docker/volumes/spigot_minecraft_data/_data
-destination=$root_folder/backups/
+destination=/mnt/Alpha/backups/minecraft
 
 # Using -C parameter of tar, simply specify relative paths to save
 world=world/
