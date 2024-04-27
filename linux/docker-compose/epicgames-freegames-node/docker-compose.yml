@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   epicgames-freegames-node:
     image: ghcr.io/claabs/epicgames-freegames-node:latest
@@ -10,6 +9,8 @@ services:
     networks:
       - epicgames_freegames_node
     restart: unless-stopped
+    environment:
+      TZ: America/Panama
     volumes:
       - type: volume
         source: data
@@ -17,7 +18,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2g
+          memory: 1g
 volumes:
   data: {}
 networks:

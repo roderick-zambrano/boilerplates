@@ -1,6 +1,3 @@
-version = "3.9"
-
-[services]
 [services.epicgames-freegames-node]
 image = "ghcr.io/claabs/epicgames-freegames-node:latest"
 security_opt = [ "no-new-privileges:true" ]
@@ -14,12 +11,14 @@ networks = [
 #   "3000:3000"
 # ]
 restart = "unless-stopped"
+[services.epicgames-freegames-node.environment]
+TZ = "America/Panama"
 [[services.epicgames-freegames-node.volumes]]
 type = "volume" 
 source = "data"
 target = "/usr/app/config"
 [services.epicgames-freegames-node.deploy.resources.limits]
-memory = "2g"
+memory = "1g"
 
 [volumes.data]
 [networks.epicgames_freegames_node]
