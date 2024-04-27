@@ -7,6 +7,7 @@ restart = "unless-stopped"
 [services.cloudflare-ddns.environment]
 PUID = 1000
 GUID = 1000
+TZ = "America/Panama"
 [[services.cloudflare-ddns.volumes]]
 type = "bind"
 source = "/etc/localtime"
