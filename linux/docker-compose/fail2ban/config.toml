@@ -1,0 +1,41 @@
+[services.fail2ban]
+image = "crazymax/fail2ban:latest"
+container_name = "fail2ban"
+hostname = "fail2ban"
+restart = "unless-stopped"
+network_mode = "host"
+cap_add = [
+  "NET_ADMIN",
+  "NET_RAW"
+]
+[services.fail2ban.environment]
+TZ = "America/Panama"
+F2B_LOG_TARGET = "STDOUT"
+F2B_LOG_LEVEL = "INFO"
+F2B_DB_PURGE_AGE = "365d"
+SSMTP_HOST = "smtp.gmail.com"
+SSMTP_PORT = 587
+SSMTP_HOSTNAME = "domain.name"
+SSMTP_USER = "email@example.com"
+SSMTP_PASSWORD = "SECURE_APP_PASS"
+SSMTP_TLS = "YES"
+# networks = [
+#   "customnetwork"
+# ]
+[[services.fail2ban.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.fail2ban.volumes]]
+type = "volume"
+source = "data"
+target = "/data"
+[[services.fail2ban.volumes]]
+type = "bind"
+source = "path/to/logs"
+target = "/log/npm"
+read_only = true
+
+
+[volumes.data]
