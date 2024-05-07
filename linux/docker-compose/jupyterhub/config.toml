@@ -1,0 +1,48 @@
+[services]
+[services.jupyterhub]
+image = "quay.io/jupyterhub/jupyterhub"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "jupyterhub"
+hostname = "jupyterhub"
+# ports = ["8000:8000"]
+networks = [ "jupyterhub" ]
+command = "jupyterhub"
+[services.jupyterhub.environment]
+JPY_COOKIE_SECRET = "CookieSecretKey"
+
+[[services.jupyterhub.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.jupyterhub.volumes]]
+type = "volume"
+source = "data"
+target = "/usr/local/share/jupyterhub"
+[[services.jupyterhub.volumes]]
+type = "volume"
+source = "config"
+target = "/etc/jupyterhub"
+[[services.jupyterhub.volumes]]
+type = "volume"
+source = "log"
+target = "/var/log"
+[[services.jupyterhub.volumes]]
+type = "volume"
+source = "userdata"
+target = "/home"
+
+[services.jupyter_installer]
+image = "quay.io/jupyterhub/jupyterhub"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "jupyter_installer"
+networks = [ "jupyterhub" ]
+command = "pip3 install jupyter"
+depends_on = ["jupyterhub"]
+
+[volumes.data]
+[volumes.config]
+[volumes.log]
+[volumes.home]
+[networks.jupyterhub]
+external = true
