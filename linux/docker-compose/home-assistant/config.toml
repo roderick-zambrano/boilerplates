@@ -1,0 +1,24 @@
+[services.home-assistant]
+image = "ghcr.io/home-assistant/home-assistant:stable"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "home-assistant"
+hostname = "home-assistant"
+privileged = true
+network_mode = "host"
+restart = "unless-stopped"
+[[services.home-assistant.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.home-assistant.volumes]]
+type = "bind"
+source = "/run/dbus"
+target = "/run/dbus"
+read_only = true
+[[services.home-assistant.volumes]]
+type = "volume"
+source = "config"
+target = "/config"
+
+[volumes.config]
