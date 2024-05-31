@@ -15,7 +15,7 @@ target = "/etc/localtime"
 read_only = true
 [[services.cloudflare-ddns.volumes]]
 type = "bind"
-source = "/var/lib/docker/volumes/cloudflare-ddns_data/_data/config.json"
+source = "/data/docker/volumes/cloudflare-ddns_data/_data/config.json"
 target = "/config.json"
 # [volumes]
 # [volumes.data]
