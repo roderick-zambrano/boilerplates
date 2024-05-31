@@ -2,12 +2,12 @@
 image = "crazymax/fail2ban:latest"
 container_name = "fail2ban"
 hostname = "fail2ban"
-restart = "unless-stopped"
 network_mode = "host"
 cap_add = [
   "NET_ADMIN",
   "NET_RAW"
 ]
+restart = "unless-stopped"
 [services.fail2ban.environment]
 TZ = "America/Panama"
 F2B_LOG_TARGET = "STDOUT"
@@ -19,9 +19,6 @@ SSMTP_HOSTNAME = "domain.name"
 SSMTP_USER = "email@example.com"
 SSMTP_PASSWORD = "SECURE_APP_PASS"
 SSMTP_TLS = "YES"
-# networks = [
-#   "customnetwork"
-# ]
 [[services.fail2ban.volumes]]
 type = "bind"
 source = "/etc/localtime"
