@@ -9,7 +9,7 @@ networks = [
 ]
 # ports = [
 #   "25565:25565",
-#   "8081:8080" # For Pl3xmap
+#   "8080:8080" # For Pl3xmap
 # ]
 restart = "unless-stopped"
 [services.minecraft.environment]
