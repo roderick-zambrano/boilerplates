@@ -1,0 +1,15 @@
+[services.watchtower]
+image = "containrrr/watchtower"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "watchtower"
+hostname = "watchtower"
+restart = "unless-stopped"
+[[services.watchtower.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.watchtower.volumes]]
+type = "bind"
+source = "/var/run/docker.sock"
+target = "/var/run/docker.sock"
