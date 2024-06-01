@@ -1,5 +1,3 @@
-version = "3.9"
-
 [services.nginx-proxy-manager]
 image = "jc21/nginx-proxy-manager:latest"
 security_opt = [ "no-new-privileges:true" ]
@@ -23,15 +21,21 @@ networks = [
   "npm",
   "devrod",
   "dockge",
+  "epicgames_freegames_node",
+  "firefly_iii",
   "gitlab",
+  "immich",
+  "jupyterhub",
   "kanboard",
   "logseq",
   "ntfy",
   "passbolt",
   "phpmyadmin",
+  "portainer",
   "rustdesk",
   "speedtest_tracker",
   "spigot_minecraft",
+  "vaultwarden",
   "wireguard"
 ]
 [[services.nginx-proxy-manager.volumes]]
@@ -62,23 +66,35 @@ external = true
 external = true
 [networks.dockge]
 external = true
+[networks.epicgames_freegames_node]
+external = true
+[networks.firefly_iii]
+external = true
 [networks.gitlab]
+external = true
+[networks.immich]
+external = true
+[networks.jupyterhub]
 external = true
 [networks.kanboard]
 external = true
 [networks.logseq]
 external = true
+[networks.ntfy]
+external = true
 [networks.passbolt]
 external = true
 [networks.phpmyadmin]
 external = true
-[networks.ntfy]
+[networks.portainer]
 external = true
 [networks.rustdesk]
 external = true
 [networks.speedtest_tracker]
 external = true
 [networks.spigot_minecraft]
+external = true
+[networks.vaultwarden]
 external = true
 [networks.wireguard]
 external = true
