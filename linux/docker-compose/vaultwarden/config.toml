@@ -4,6 +4,7 @@ image = "vaultwarden/server:latest"
 container_name = "vaultwarden"
 hostname = "vaultwarden"
 networks = ["vaultwarden"]
+# ports = [ "80:80" ]
 restart = "unless-stopped"
 
 [[services.vaultwarden.volumes]]
