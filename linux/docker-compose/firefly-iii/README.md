@@ -36,3 +36,13 @@ NOTE: Escape the `"` accordingly in the cron job format, the `\"` are required.
 ## Configuration
 
 ## Notes
+
+To test that the CRON container is successfully configured, you can run the following command with your own static CRON token:
+
+```
+wget -qO- http://firefly-core:8080/api/v1/cron/STATIC_CRON_TOKENValue
+```
+
+This enables recurring transactions to function as expected.
+
+Some mobile apps exist that require the generation of tokens within the core app. this can be done through the UI in your Account Settings.

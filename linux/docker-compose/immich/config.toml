@@ -1,0 +1,87 @@
+[services]
+[services.immich-server]
+image = "ghcr.io/immich-app/immich-server:release"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "immich-server"
+hostname = "immich-server"
+command = [ "start.sh", "immich" ]
+env_file = [ ".env" ]
+networks = [ "immich" ]
+# ports = ["3001:3001"]
+depends_on = [ "redis", "database" ]
+labels = ["com.centurylinklabs.watchtower.enable=false"]
+restart = "always"
+[[services.immich-server.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.immich-server.volumes]]
+type = "volume"
+source = "upload"
+target = "/usr/src/app/upload"
+[services.immich-microservices]
+image = "ghcr.io/immich-app/immich-server:release"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "immich-microservices"
+hostname = "immich-microservices"
+networks = [ "immich" ]
+command = [ "start.sh", "microservices" ]
+env_file = [ ".env" ]
+depends_on = [ "redis", "database" ]
+labels = ["com.centurylinklabs.watchtower.enable=false"]
+restart = "always"
+[[services.immich-microservices.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.immich-microservices.volumes]]
+type = "volume"
+source = "upload"
+target = "/usr/src/app/upload"
+[services.immich-machine-learning]
+container_name = "immich-machine-learning"
+hostname = "immich-machine-learning"
+image = "ghcr.io/immich-app/immich-machine-learning:release"
+security_opt = [ "no-new-privileges:true" ]
+env_file = [ ".env" ]
+labels = ["com.centurylinklabs.watchtower.enable=false"]
+restart = "always"
+[[services.immich-machine-learning.volumes]]
+type = "volume"
+source = "model-cache"
+target = "/usr/src/app/upload"
+[services.redis]
+image = "registry.hub.docker.com/library/redis:6.2-alpine@sha256:84882e87b54734154586e5f8abd4dce69fe7311315e2fc6d67c29614c8de2672"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "redis"
+hostname = "redis"
+networks = [ "immich" ]
+labels = ["com.centurylinklabs.watchtower.enable=false"]
+restart = "always"
+[services.database]
+image = "registry.hub.docker.com/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "database"
+hostname = "database"
+networks = [ "immich" ]
+command = ["postgres", "-c", "shared_preload_libraries=vectors.so", "-c", "search_path=\"$$user\", public, vectors", "-c", "logging_collector=on", "-c", "max_wal_size=2GB", "-c", "shared_buffers=512MB", "-c", "wal_compression=on"]
+labels = ["com.centurylinklabs.watchtower.enable=false"]
+restart = "always"
+[services.database.environment]
+POSTGRES_PASSWORD = "${DB_PASSWORD}"
+POSTGRES_USER = "${DB_USERNAME}"
+POSTGRES_DB = "${DB_DATABASE_NAME}"
+POSTGRES_INITDB_ARGS = "--data-checksums"
+[[services.database.volumes]]
+type = "volume"
+source = "postgres"
+target = "/var/lib/postgresql/data"
+
+[volumes.upload]
+[volumes.model-cache]
+[volumes.postgres]
+
+[networks.immich]
+external = true

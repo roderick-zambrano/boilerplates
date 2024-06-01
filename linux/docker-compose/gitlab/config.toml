@@ -1,5 +1,3 @@
-version = "3.9"
-
 [services]
 [services.gitlab]
 image = "gitlab/gitlab-ce:latest"
@@ -8,12 +6,14 @@ container_name = "gitlab"
 hostname = "gitlab"
 networks = [ "gitlab" ]
 # ports = [
-#   "7443:443",
-#   "2222:22",
-#   "8085:80"
+#   "443:443",
+#   "22:22",
+#   "80:80"
 # ]
 restart = "always"
 shm_size = "256m"
+[services.gitlab.environment]
+GITLAB_OMNIBUS_CONFIG = "external_url 'http://gitlab.domain.name'"
 [[services.gitlab.volumes]]
 type = "bind"
 source = "/etc/localtime"
@@ -32,9 +32,35 @@ type = "volume"
 source = "data"
 target = "/var/opt/gitlab"
 
+[services.gitlab-runner]
+image = "gitlab/gitlab-runner:alpine"
+security_opt = [ 'no-new-privileges:true' ]
+container_name = "gitlab-runner"
+# ports = [ '8093:8093' ]
+networks = [ "gitlab" ]
+hostname = "gitlab-runner"
+restart = "always"
+[services.gitlab-runner.environment]
+CI_SERVER_URL = "http://gitlab.gitlab"
+# REGISTRATION_TOKEN = "SECURE_TOKEN"
+[[services.gitlab-runner.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+[[services.gitlab-runner.volumes]]
+type = "bind"
+source = "/var/run/docker.sock"
+target = "/var/run/docker.sock"
+[[services.gitlab-runner.volumes]]
+type = "volume"
+source = "runner-config"
+target = "/etc/gitlab-runner"
+
 [volumes.config]
 [volumes.data]
 [volumes.logs]
+[volumes.runner-config]
 
 [networks.gitlab]
 external = true

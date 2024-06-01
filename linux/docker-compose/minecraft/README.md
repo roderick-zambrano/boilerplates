@@ -15,6 +15,8 @@ If there are version issues due to an image update, the `stable` tag might be he
 
 If you're having read/write issues in the volume, make sure that the volume permissions are set to PUID=1000 and PGID=1000. After all, those are the respective permissions used by the container.
 
+If you're having issues downloading the JAR file, set the environment variable `BUILD_FROM_SOURCE` to `true`, which will build the image directly in the container.
+
 The settings on this configuration allow for the creation of a simple Minecraft stack with persistent storage of a session as quick as possible.
 
 ## Configuration

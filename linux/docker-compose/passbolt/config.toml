@@ -1,0 +1,63 @@
+[services]
+[services.passbolt]
+image = "passbolt/passbolt:latest-ce"
+container_name = "passbolt"
+hostname = "passbolt"
+security_opt = [ "no-new-privileges:true" ]
+restart = "unless-stopped"
+depends_on = ["db"]
+command = ["/usr/bin/wait-for.sh", "-t", "0", "passbolt-db:3306", "--", "/docker-entrypoint.sh"]
+networks = [ "passbolt" ]
+# ports = ["80:80", "443:443"]
+[services.passbolt.environment]
+APP_FULL_BASE_URL = "https://passbolt.domain.name"
+DATASOURCES_DEFAULT_HOST = "db"
+DATASOURCES_DEFAULT_USERNAME = "username"
+DATASOURCES_DEFAULT_PASSWORD = "password"
+DATASOURCES_DEFAULT_DATABASE = "passbolt"
+EMAIL_DEFAULT_FROM = "no-reply@domain.name"
+EMAIL_TRANSPORT_DEFAULT_HOST = "localhost"
+EMAIL_TRANSPORT_DEFAULT_PORT = 587
+EMAIL_TRANSPORT_DEFAULT_USERNAME = "email"
+EMAIL_TRANSPORT_DEFAULT_PASSWORD = "password"
+EMAIL_TRANSPORT_DEFAULT_TLS = true
+PASSBOLT_GPG_SERVER_KEY_PUBLIC = "/etc/passbolt/gpg/serverkey.asc"
+PASSBOLT_GPG_SERVER_KEY_PRIVATE = "/etc/passbolt/gpg/serverkey_private.asc"
+PASSBOLT_REGISTRATION_PUBLIC = false
+PASSBOLT_SSL_FORCE = true
+TZ = "America/Panama"
+# PASSBOLT_SECURITY_SMTP_SETTINGS_ENDPOINTS_DISABLED = true # This disables Email entirely.
+[[services.passbolt.volumes]]
+type = "volume"
+source = "gpg"
+target = "/etc/passbolt/gpg"
+[[services.passbolt.volumes]]
+type = "volume"
+source = "jwt"
+target = "/etc/passbolt/jwt"
+
+
+[services.db]
+image = "mariadb:10.11"
+container_name = "passbolt-db"
+hostname = "passbolt-db"
+security_opt = [ "no-new-privileges:true" ]
+restart = "unless-stopped"
+networks = [ "passbolt" ]
+[services.db.environment]
+MYSQL_RANDOM_ROOT_PASSWORD = "true"
+MYSQL_DATABASE = "passbolt"
+MYSQL_USER = "username"
+MYSQL_PASSWORD = "password"
+[[services.db.volumes]]
+type = "volume"
+source = "db"
+target = "/var/lib/mysql"
+
+[volumes]
+[volumes.gpg]
+[volumes.jwt]
+[volumes.db]
+
+[networks.passbolt]
+external = true
