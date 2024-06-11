@@ -4,7 +4,6 @@ image = "ghcr.io/immich-app/immich-server:release"
 security_opt = [ "no-new-privileges:true" ]
 container_name = "immich-server"
 hostname = "immich-server"
-command = [ "start.sh", "immich" ]
 env_file = [ ".env" ]
 networks = [ "immich" ]
 # ports = ["3001:3001"]
@@ -17,26 +16,6 @@ source = "/etc/localtime"
 target = "/etc/localtime"
 read_only = true
 [[services.immich-server.volumes]]
-type = "volume"
-source = "upload"
-target = "/usr/src/app/upload"
-[services.immich-microservices]
-image = "ghcr.io/immich-app/immich-server:release"
-security_opt = [ "no-new-privileges:true" ]
-container_name = "immich-microservices"
-hostname = "immich-microservices"
-networks = [ "immich" ]
-command = [ "start.sh", "microservices" ]
-env_file = [ ".env" ]
-depends_on = [ "redis", "database" ]
-labels = ["com.centurylinklabs.watchtower.enable=false"]
-restart = "always"
-[[services.immich-microservices.volumes]]
-type = "bind"
-source = "/etc/localtime"
-target = "/etc/localtime"
-read_only = true
-[[services.immich-microservices.volumes]]
 type = "volume"
 source = "upload"
 target = "/usr/src/app/upload"
