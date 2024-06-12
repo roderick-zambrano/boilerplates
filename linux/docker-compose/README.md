@@ -50,7 +50,7 @@ Sometimes, some containers might show issues regarding writing to a file within 
 - Validate if the container needs a mapped volume and if the mapping exists.
 - Validate the permissions so that the container can r/w/rw as needed.
 - Reload the docker service and restart it. `systemctl reload docker && systemctl restart docker`
-- Reload the systemctl daemon. `systemcl daemon-reload`
+- Reload the systemctl daemon. `systemctl daemon-reload`
 
 
 ## TOML Reference
