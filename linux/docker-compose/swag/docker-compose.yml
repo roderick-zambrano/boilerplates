@@ -1,0 +1,35 @@
+services:
+  swag:
+    image: lscr.io/linuxserver/swag:latest
+    security_opt:
+      - no-new-privileges:true
+    container_name: swag
+    hostname: swag
+    restart: unless-stopped
+    networks:
+      - swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Panama
+      URL: devrod.tech
+      VALIDATION: dns
+      SUBDOMAINS: wildcard
+      CERTPROVIDER: ""
+      DNSPLUGIN: cloudflare
+      PROPAGATION: ""
+      EMAIL: ""
+      ONLY_SUBDOMAINS: false
+      EXTRA_DOMAINS: ""
+      STAGING: true
+    volumes:
+      - type: volume
+        source: config
+        target: /config
+volumes:
+  config: {}
+networks:
+  swag:
+    external: true
