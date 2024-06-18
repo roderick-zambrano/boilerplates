@@ -23,7 +23,11 @@ user.save!
 
 ### Email Notifications
 
-You can modify the gitlab.rb Rails configuration file to enable SMTP email notifications. Simply change the SMTP options in the file.
+You can modify the gitlab.rb Rails configuration file to enable SMTP email notifications. Simply change the SMTP options in the file. To test if the service works, you can use the following command within the gitlab-rails console:
+
+```
+Notify.test_email('email@example.com', 'Subject Of Message', 'Body of message').deliver_now
+```
 
 ## Notes
 
