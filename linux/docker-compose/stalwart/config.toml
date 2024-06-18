@@ -1,0 +1,37 @@
+[services.stalwart-mail]
+image = "stalwartlabs/mail-server:latest"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "stalwart-mail"
+hostname = "stalwart-mail"
+networks = [
+  "stalwart"
+]
+# ports = [
+# Essential ports:
+#   "25:25",     # SMTP
+#   "443:443",   # HTTPS +
+#   "465:465",   # SMTPS
+#   "993:993",   # IMAPS
+# Non-essential ports:
+#   "110:110",   # POP3
+#   "143:143",   # IMAP4
+#   "587:587",   # SMTP Submission
+#   "995:995"    # POP3S
+#   "4190:4190", # ManageSieve
+#   "8080:8080"  # HTTP
+# ]
+restart = "always"
+# [[services.container.volumes]]
+# type = "bind"
+# source = "/etc/localtime"
+# target = "/etc/localtime"
+# read_only = true
+[[services.stalwart-mail.volumes]]
+type = "volume"
+source = "data"
+target = "/opt/stalwart-mail"
+
+[volumes.data]
+
+[networks.stalwart]
+external = true

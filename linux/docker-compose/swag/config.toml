@@ -1,0 +1,37 @@
+[services.swag]
+image = "lscr.io/linuxserver/swag:latest"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "swag"
+hostname = "swag"
+# ports = [
+#   "80:80",
+#   "443:443"
+#   # And all other necessary ports for protocols to be forwarded
+# ]
+restart = "unless-stopped"
+networks = [
+  "swag"
+]
+cap_add = [ "NET_ADMIN" ]
+[services.swag.environment]
+PUID = 1000
+PGID = 1000
+TZ = "America/Panama"
+URL = "devrod.tech"
+VALIDATION = "dns"
+SUBDOMAINS = "wildcard"
+CERTPROVIDER = "" #optional
+DNSPLUGIN = "cloudflare"
+PROPAGATION = "" #optional"
+EMAIL = "" #optional"
+ONLY_SUBDOMAINS = false #optional
+EXTRA_DOMAINS = "" #optional
+STAGING = true #optional
+[[services.swag.volumes]]
+type = "volume"
+source = "config"
+target = "/config"
+
+[volumes.config]
+[networks.swag]
+external = true

@@ -1,0 +1,19 @@
+services:
+  stalwart-mail:
+    image: stalwartlabs/mail-server:latest
+    security_opt:
+      - no-new-privileges:true
+    container_name: stalwart-mail
+    hostname: stalwart-mail
+    networks:
+      - stalwart
+    restart: always
+    volumes:
+      - type: volume
+        source: data
+        target: /opt/stalwart-mail
+volumes:
+  data: {}
+networks:
+  stalwart:
+    external: true
