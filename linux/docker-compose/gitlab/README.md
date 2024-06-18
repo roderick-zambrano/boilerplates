@@ -21,5 +21,9 @@ user.save!
 
 ## Configuration
 
+### Email Notifications
+
+You can modify the gitlab.rb Rails configuration file to enable SMTP email notifications. Simply change the SMTP options in the file.
+
 ## Notes
 
