@@ -26,3 +26,5 @@ This setup assumes that the certificate challenge is DNS, through Cloudflare. It
 ## Configuration
 
 ## Notes
+
+You can configure logging of Stream connections by adding a `log_format` directive and a respective `access_log` directive. This can be done for streams as a whole through the nginx.conf or it can be done individually per stream.
