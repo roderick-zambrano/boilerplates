@@ -26,12 +26,7 @@ deploy:
 
 cleanup:
   stage: cleanup
-  image: alpine:latest
+  image: docker:latest
   script:
-    - echo "Starting cleanup..."
-    - git remote remove github
-    - git remote remove gitlab
-    - git config --global --unset user.name
-    - git config --global --unset user.email
-    - apk del git
-    - echo "Cleanup completed."
+    - docker volume prune -f
+  when: always
