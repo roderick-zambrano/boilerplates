@@ -1,5 +1,6 @@
 stages:
   - deploy
+  - cleanup
 
 deploy:
   stage: deploy
@@ -23,7 +24,10 @@ deploy:
     - git remote add gitlab https://${USERNAME}:${GITLAB_TOKEN}@gitlab.com/${USERNAME}/${TARGET_REPO}.git
     - git push gitlab
 
-    # Clean up
+cleanup:
+  stage: cleanup
+  image: alpine:latest
+  script:
     - echo "Starting cleanup..."
     - git remote remove github
     - git remote remove gitlab
