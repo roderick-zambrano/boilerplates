@@ -16,11 +16,13 @@ deploy:
 
 
     # Push to GitHub
-    - git remote set-url github https://${GITHUB_TOKEN}@github.com/${USERNAME}/${TARGET_REPO}.git || git remote add github https://${GITHUB_TOKEN}@github.com/${USERNAME}/${TARGET_REPO}.git
+    - git remote set-url github https://${GITHUB_TOKEN}@github.com/${USERNAME}/${TARGET_REPO}.git ||
+      git remote add github https://${GITHUB_TOKEN}@github.com/${USERNAME}/${TARGET_REPO}.git
     - git push github
 
     # Push to GitLab
-    - git remote set-url gitlab https://${USERNAME}:${GITLAB_TOKEN}@gitlab.com/${USERNAME}/${TARGET_REPO}.git || git remote add gitlab https://${USERNAME}:${GITLAB_TOKEN}@gitlab.com/${USERNAME}/${TARGET_REPO}.git
+    - git remote set-url gitlab https://${USERNAME}:${GITLAB_TOKEN}@gitlab.com/${USERNAME}/${TARGET_REPO}.git ||
+      git remote add gitlab https://${USERNAME}:${GITLAB_TOKEN}@gitlab.com/${USERNAME}/${TARGET_REPO}.git
     - git push gitlab
 
     # Remove remotes to avoid caching issues
