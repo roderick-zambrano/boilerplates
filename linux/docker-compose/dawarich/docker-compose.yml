@@ -1,0 +1,108 @@
+services:
+  dawarich-redis:
+    image: redis:7.0-alpine
+    security_opt:
+      - no-new-privileges:true
+    container_name: redis-server
+    hostname: redis-server
+    command: redis-server
+    networks:
+      - dawarich
+    volumes:
+      - type: volume
+        source: data
+        target: /var/shared/redis
+  dawarich-db:
+    image: postgres:14.2-alpine
+    security_opt:
+      - no-new-privileges:true
+    container_name: dawarich-db
+    hostname: dawarich-db
+    networks:
+      - dawarich
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - type: volume
+        source: db
+        target: /var/lib/postresql/data
+      - type: volume
+        source: data
+        target: /var/shared
+  dawarich-core:
+    image: freikin/dawarich:latest
+    security_opt:
+      - no-new-privileges:true
+    container_name: dawarich-core
+    hostname: dawarich-core
+    entrypoint: dev-entrypoint.sh
+    command:
+      - bin/dev
+    restart: on-failure
+    depends_on:
+      - dawarich-db
+      - dawarich-redis
+    stdin_open: true
+    tty: true
+    networks:
+      - dawarich
+    environment:
+      RAILS_ENV: development
+      REDIS_URL: redis://dawarich-redis:6379/0
+      DATABASE_HOST: dawarich-db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+      DATABASE_NAME: dawarich_development
+      MIN_MINUTES_SPENT_IN_CITY: 60
+      APPLICATION_HOST: localhost
+      TIME_ZONE: America/Panama
+    volumes:
+      - type: volume
+        source: gem-cache
+        target: /usr/local/bundle/gems
+      - type: volume
+        source: public
+        target: /var/app/public
+  dawarich-sidekiq:
+    image: freikin/dawarich:latest
+    security_opt:
+      - no-new-privileges:true
+    container_name: dawarich-sidekiq
+    hostname: dawarich-sidekiq
+    networks:
+      - dawarich
+    stdin_open: true
+    tty: true
+    entrypoint: dev-entrypoint.sh
+    command:
+      - sidekiq
+    restart: on-failure
+    depends_on:
+      - dawarich-db
+      - dawarich-redis
+      - dawarich-core
+    environment:
+      RAILS_ENV: development
+      REDIS_URL: redis://dawarich-redis:6379/0
+      DATABASE_HOST: dawarich-db
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+      DATABASE_NAME: dawarich_development
+      APPLICATION_HOST: localhost
+      BACKGROUND_PROCESSING_CONCURRENCY: 10
+    volumes:
+      - type: volume
+        source: gem-cache
+        target: /usr/local/bundle/gems
+      - type: volume
+        source: public
+        target: /var/app/public
+volumes:
+  data: {}
+  db: {}
+  gem-cache: {}
+  public: {}
+networks:
+  dawarich:
+    external: true
