@@ -1,6 +1,5 @@
 stages:
   - deploy
-  - cleanup
 
 deploy:
   stage: deploy
@@ -23,10 +22,3 @@ deploy:
     # Push to GitLab
     - git remote add gitlab https://${USERNAME}:${GITLAB_TOKEN}@gitlab.com/${USERNAME}/${TARGET_REPO}.git
     - git push gitlab
-
-cleanup:
-  stage: cleanup
-  image: docker:latest
-  script:
-    - docker volume prune -f
-  when: always
