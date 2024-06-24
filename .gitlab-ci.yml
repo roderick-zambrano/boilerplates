@@ -22,3 +22,12 @@ deploy:
     # Push to GitLab
     - git remote add gitlab https://${USERNAME}:${GITLAB_TOKEN}@gitlab.com/${USERNAME}/${TARGET_REPO}.git
     - git push gitlab
+
+    # Clean up
+    - echo "Starting cleanup..."
+    - git remote remove github
+    - git remote remove gitlab
+    - git config --global --unset user.name
+    - git config --global --unset user.email
+    - apk del git
+    - echo "Cleanup completed."
