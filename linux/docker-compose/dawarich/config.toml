@@ -1,0 +1,96 @@
+[services.dawarich-redis]
+image = "redis:7.0-alpine"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "redis-server"
+hostname = "redis-server"
+command = "redis-server"
+networks = ["dawarich"]
+[[services.dawarich-redis.volumes]]
+type = "volume"
+source = "data"
+target = "/var/shared/redis"
+[services.dawarich-db]
+image = "postgres:14.2-alpine"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "dawarich-db"
+hostname = "dawarich-db"
+networks = ["dawarich"]
+[services.dawarich-db.environment]
+POSTGRES_USER = "postgres"
+POSTGRES_PASSWORD = "password"
+[[services.dawarich-db.volumes]]
+type = "volume"
+source = "db"
+target = "/var/lib/postresql/data"
+[[services.dawarich-db.volumes]]
+type = "volume"
+source = "data"
+target = "/var/shared"
+[services.dawarich-core]
+image = "freikin/dawarich:latest"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "dawarich-core"
+hostname = "dawarich-core"
+# ports = ["3000:3000"]
+entrypoint = "dev-entrypoint.sh"
+command = ["bin/dev"]
+restart = "on-failure"
+depends_on = ["dawarich-db", "dawarich-redis"]
+stdin_open = true
+tty = true
+networks = ["dawarich"]
+[services.dawarich-core.environment]
+RAILS_ENV = "development"
+REDIS_URL = "redis://dawarich-redis:6379/0"
+DATABASE_HOST = "dawarich-db"
+DATABASE_USERNAME = "postgres"
+DATABASE_PASSWORD = "password"
+DATABASE_NAME = "dawarich_development"
+MIN_MINUTES_SPENT_IN_CITY = 60
+APPLICATION_HOST = "localhost"
+TIME_ZONE = "America/Panama"
+[[services.dawarich-core.volumes]]
+type = "volume"
+source = "gem-cache"
+target = "/usr/local/bundle/gems"
+[[services.dawarich-core.volumes]]
+type = "volume"
+source = "public"
+target = "/var/app/public"
+[services.dawarich-sidekiq]
+image = "freikin/dawarich:latest"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "dawarich-sidekiq"
+hostname = "dawarich-sidekiq"
+networks = ["dawarich"]
+stdin_open = true
+tty = true
+entrypoint = "dev-entrypoint.sh"
+command = ["sidekiq"]
+restart = "on-failure"
+depends_on = ["dawarich-db", "dawarich-redis", "dawarich-core"]
+[services.dawarich-sidekiq.environment]
+RAILS_ENV = "development"
+REDIS_URL = "redis://dawarich-redis:6379/0"
+DATABASE_HOST = "dawarich-db"
+DATABASE_USERNAME = "postgres"
+DATABASE_PASSWORD = "password"
+DATABASE_NAME = "dawarich_development"
+APPLICATION_HOST = "localhost"
+BACKGROUND_PROCESSING_CONCURRENCY = 10
+[[services.dawarich-sidekiq.volumes]]
+type = "volume"
+source = "gem-cache"
+target = "/usr/local/bundle/gems"
+[[services.dawarich-sidekiq.volumes]]
+type = "volume"
+source = "public"
+target = "/var/app/public"
+
+[volumes.data]
+[volumes.db]
+[volumes.gem-cache]
+[volumes.public]
+
+[networks.dawarich]
+external = true

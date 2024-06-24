@@ -1,5 +1,3 @@
-version = "3.9"
-
 [services.ntfy]
 image = "binwiederhier/ntfy"
 security_opt = [ "no-new-privileges:true" ]
@@ -10,7 +8,7 @@ networks = [
   "ntfy"
 ]
 # ports = [
-#   "8083:80"
+#   "80:80"
 # ]
 restart = "unless-stopped"
 [[services.ntfy.volumes]]
