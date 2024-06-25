@@ -72,3 +72,5 @@ If there exist any generated emails that remain unsent in the queue, the followi
 ```
 
 ## Notes
+
+The Windows Passbolt desktop application may have an issue in which credentials handled by the Credential Manager do not allow resetting the application. Simply open the Credential Manager, find the account-metadata, account-secret, and configuration entries and delete them. It should reset the application and allow you to sign in again.
