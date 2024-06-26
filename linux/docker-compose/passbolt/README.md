@@ -49,9 +49,18 @@ chmod 640 /etc/passbolt/jwt/jwt.key
 chmod 640 /etc/passbolt/jwt/jwt.pem
 ```
 
+Make sure temporary directory is writable by www-data and not executable.
+```
+chown -R www-data:www-data /var/lib/passbolt/tmp/
+chmod -R 775 $(find /var/lib/passbolt/tmp/ -type d)
+chmod -R 664 $(find /var/lib/passbolt/tmp/ -type f)
+```
+
 Follow any instructions in failing tests to get Passbolt fully functional without major issue. Most which aren't listed here are due to them having commands recommended by the healthcheck itself, although with adequately set environment variables as are listed in the project's repository much of the difficulties in the setup disappear.
 
 ### Email
+
+Email functionality can be configured through the Administrator settings. When testing email functionality, make sure that the port used is supported.
 
 Inside a shell within the passbolt container, use the following command to test the email functionality:
 
