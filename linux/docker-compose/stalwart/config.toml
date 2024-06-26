@@ -30,8 +30,15 @@ restart = "always"
 type = "volume"
 source = "data"
 target = "/opt/stalwart-mail"
+[[services.stalwart-mail.volumes]]
+type = "volume"
+source = "swag_certs"
+target = "/opt/swag_certs"
+read_only = true
 
 [volumes.data]
+[volumes.swag_certs]
+external = true
 
 [networks.stalwart]
 external = true

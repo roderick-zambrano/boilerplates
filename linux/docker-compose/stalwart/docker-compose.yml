@@ -12,8 +12,14 @@ services:
       - type: volume
         source: data
         target: /opt/stalwart-mail
+      - type: volume
+        source: swag_certs
+        target: /opt/swag_certs
+        read_only: true
 volumes:
   data: {}
+  swag_certs:
+    external: true
 networks:
   stalwart:
     external: true
