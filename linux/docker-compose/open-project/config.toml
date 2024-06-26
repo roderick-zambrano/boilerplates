@@ -1,0 +1,33 @@
+[services.openproject]
+image = "openproject/openproject:14"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "openproject"
+hostname = "openproject"
+stdin_open = true
+tty = true
+# ports = [
+#   "80:80"
+# ]
+restart = "unless-stopped"
+networks = [
+  "openproject"
+]
+[services.openproject.environment]
+OPENPROJECT_SECRET_KEY_BASE = ""
+OPENPROJECT_HOST__NAME = "domain.name:80"
+OPENPROJECT_HTTPS = true
+OPENPROJECT_DEFAULT__LANGUAGE = "en"
+[[services.openproject.volumes]]
+type = "volume"
+source = "pgdata"
+target = "/var/openproject/pgdata"
+[[services.openproject.volumes]]
+type = "volume"
+source = "assets"
+target = "/var/openproject/assets"
+
+[volumes.pgdata]
+[volumes.assets]
+
+[networks.openproject]
+external = true
