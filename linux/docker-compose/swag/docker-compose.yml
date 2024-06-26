@@ -28,8 +28,12 @@ services:
       - type: volume
         source: config
         target: /config
+      - type: volume
+        source: certs
+        target: /config/etc/letsencrypt/live/domain.name
 volumes:
   config: {}
+  certs: {}
 networks:
   swag:
     external: true

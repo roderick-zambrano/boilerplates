@@ -31,7 +31,12 @@ STAGING = true #optional
 type = "volume"
 source = "config"
 target = "/config"
+[[services.swag.volumes]]
+type = "volume"
+source = "certs"
+target = "/config/etc/letsencrypt/live/domain.name"
 
 [volumes.config]
+[volumes.certs]
 [networks.swag]
 external = true
