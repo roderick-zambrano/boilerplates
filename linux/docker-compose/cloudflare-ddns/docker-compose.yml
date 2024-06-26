@@ -1,20 +1,22 @@
 services:
   cloudflare-ddns:
-    image: timothyjmiller/cloudflare-ddns:latest
+    image: favonia/cloudflare-ddns:latest
     security_opt:
       - no-new-privileges:true
     container_name: cloudflare-ddns
     network_mode: host
     restart: unless-stopped
+    cap_add:
+      - SETUID
+      - SETGID
+    cap_drop:
+      - all
+    read_only: true
     environment:
       PUID: 1000
       GUID: 1000
       TZ: America/Panama
-    volumes:
-      - type: bind
-        source: /etc/localtime
-        target: /etc/localtime
-        read_only: true
-      - type: bind
-        source: /var/lib/docker/volumes/cloudflare-ddns_data/_data/config.json
-        target: /config.json
+      CF_API_TOKEN: CFAPITOKEN
+      DOMAINS: example.org,www.example.org
+      IPV6_PROVIDER: none
+      PROXIED: false
