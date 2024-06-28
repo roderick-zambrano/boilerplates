@@ -30,7 +30,6 @@ docker network create -d bridge --attachable network_name
 
 It is recommended that docker volumes are used instead of static bind mounts, but in case volume data needs to be copied to another location instead of the local docker volume storage directory, the following command can be used to extract the data stored in a volume and compress it into a tarball.
 
-
 ```
 docker run --rm --volumes-from container-name -v $(pwd):/backup busybox tar cvf /backup/compressed.tar target_path_in_container
 ```
@@ -42,6 +41,15 @@ To extract a volume compressed into a tarball, the following command can be used
 ```
 docker run --rm --volumes-from container-name -v $(pwd):/backup busybox sh -c "cd /backup && tar xvf /backup/compressed.tar --strip 1"
 ```
+
+### Log Errors
+
+If logs show the following error:
+```
+error from daemon in stream: Error grabbing logs: invalid character ‘\x00’ looking for beginning of value
+```
+The log file is probably corrupted. You can simply rebuild the container to overwrite the log file.
+
 
 ## Container Permission Errors
 
