@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  name: speedtest-tracker-network
+spec:
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              io.kompose.network/speedtest-tracker-network: "true"
+  podSelector:
+    matchLabels:
+      io.kompose.network/speedtest-tracker-network: "true"

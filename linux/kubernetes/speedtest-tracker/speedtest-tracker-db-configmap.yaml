@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: speedtest-tracker-db-config
+  namespace: server
+data:
+  MARIADB_DATABASE: "speedtest_tracker"
+  MARIADB_PASSWORD: "StrongDBPassword"
+  MARIADB_ROOT_PASSWORD: "StrongRandomPassword"
+  MARIADB_USER: "speedy"
+  TZ: "America/Panama"

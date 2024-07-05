@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.24.0 (4a2a0458)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: speedtest-tracker
+  name: speedtest-tracker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: speedtest-tracker
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.24.0 (4a2a0458)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/speedtest-tracker-network: "true"
+        io.kompose.service: speedtest-tracker
+    spec:
+      containers:
+        - image: lscr.io/linuxserver/speedtest-tracker:latest
+          name: speedtest-tracker
+          envFrom:
+            - configMapRef:
+                name: speedtest-tracker-config
+          ports:
+            - containerPort: 443
+          resources: {}
+          volumeMounts:
+            - mountPath: /config
+              name: speedtest-tracker-data
+      hostname: speedtest-tracker
+      restartPolicy: Always
+      volumes:
+        - name: speedtest-tracker-data
+          persistentVolumeClaim:
+            claimName: speedtest-tracker-data
+status: {}
