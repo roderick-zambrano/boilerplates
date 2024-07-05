@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflare-ddns-config
+  namespace: server
+data:
+  CF_API_TOKEN: "value"
+  DOMAINS: "value"
+  GUID: "1000"
+  PUID: "1000"
+  IP6_PROVIDER: "none"
+  PROXIED: "false"
+  TZ: "America/Panama"
