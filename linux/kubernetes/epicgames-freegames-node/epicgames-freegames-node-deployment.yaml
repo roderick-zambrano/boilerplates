@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.24.0 (4a2a0458)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: epicgames-freegames-node
+  name: epicgames-freegames-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: epicgames-freegames-node
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.24.0 (4a2a0458)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/epicgames-freegames-node: "true"
+        io.kompose.service: epicgames-freegames-node
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - image: ghcr.io/claabs/epicgames-freegames-node:latest
+          name: epicgames-freegames-node
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: "1073741824"
+          volumeMounts:
+            - mountPath: /usr/app/config
+              name: epicgames-fgn-data
+      volumes:
+        - name: epicgames-fgn-data
+          persistentVolumeClaim:
+            claimName: epicgames-fgn-data
+      hostname: epicgames-freegames-node
+      restartPolicy: Always
+status: {}
