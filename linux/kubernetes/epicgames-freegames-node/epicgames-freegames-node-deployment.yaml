@@ -34,7 +34,7 @@ spec:
             - containerPort: 3000
           resources:
             limits:
-              memory: "1073741824"
+              memory: "800M"
           volumeMounts:
             - mountPath: /usr/app/config
               name: epicgames-fgn-data
