@@ -27,7 +27,15 @@ This setup assumes that the certificate challenge is DNS, through Cloudflare. It
 
 ## Notes
 
+### Logging
+
 You can configure logging of Stream connections by adding a `log_format` directive and a respective `access_log` directive. This can be done for streams as a whole through the nginx.conf or it can be done individually per stream.
+
+### Manual Blocklist
+
+If necessary, you can add a custom deny list by creating a .conf file with respective `deny` directives to block IPs from accessing a respective service. See nginx `ngx_http_access_module` documentation for more information on syntax and usage.
+
+### SSL Certificate Sharing
 
 If you are generating SSL certificates with SWAG and need to share them, it might be a little tricky due to the fact that the same /config directory in which the majority of the relevant data exists also includes the certificates. However, we can create a post cert renewal-hook that copies these files into another location so that we can simply share those in read-only format for other containers that might directly need the certificate files. The hooks directory is found in `/config/etc/letsencrypt/renewal-hooks/post/`
 

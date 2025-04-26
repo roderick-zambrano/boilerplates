@@ -17,6 +17,8 @@
 
 ## Notes
 
+If upon initial setup you cannot access the Web UI, it's possible that the webadmin bundle is not successfully being downloaded. Check the Stalwart web-based administration documentation to find an alternate way to set up Webadmin.
+
 After creating an account, if certificates are invalid, it is possible to still use it. Without proper TLS configuration, you can still use port 143 for Inbound and 587 for outbound, both with STARTTLS setting enabled. The only issue is that with invalid certificates come risks.
 
 You can also simply set the ACME Providers which are straightforward enough in the Web Admin UI.

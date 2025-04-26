@@ -18,7 +18,47 @@ services:
         target: /run/dbus
         read_only: true
       - type: volume
-        source: config
+        source: core-config
         target: /config
+  mosquitto:
+    image: eclipse-mosquitto
+    security_opt:
+      - no-new-privileges:true
+    container_name: mosquitto
+    hostname: mosquitto
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: mqtt-config
+        target: /mosquitto/config
+      - type: volume
+        source: mqtt-data
+        target: /mosquitto/data
+      - type: volume
+        source: mqtt-log
+        target: /mosquitto/log
+  govee2mqtt:
+    image: ghcr.io/wez/govee2mqtt
+    security_opt:
+      - no-new-privileges:true
+    container_name: govee2mqtt
+    hostname: govee2mqtt
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      TZ: America/Panama
+      GOVEE_EMAIL: user@example.com
+      GOVEE_PASSWORD: GoveePassword
+      GOVEE_API_KEY: RequestGoveeAPIKeyFromGovee
+      GOVEE_MQTT_HOST: localhost
+      GOVEE_MQTT_PORT: 1883
+      GOVEE_MQTT_USER: mqtt
+      GOVEE_MQTT_PASSWORD: mqttpassword
+      GOVEE_TEMPERATURE_SCALE: C
+      RUST_LOG_STYLE: always
 volumes:
-  config: {}
+  core-config: {}
+  mqtt-config: {}
+  mqtt-data: {}
+  mqtt-log: {}
