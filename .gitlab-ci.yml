@@ -22,7 +22,7 @@ deploy:
     # Push to GitLab
     - git remote add gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git ||
       git remote set-url gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git
-    - git push gitlab --force
+    - git push gitlab --force HEAD:refs/heads/$CI_COMMIT_BRANCH
 
     # Debug
     - git branch -a
