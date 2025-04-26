@@ -11,18 +11,18 @@ deploy:
     # Configure required variables and settings
     - git config --global user.name "${FULL_NAME}"
     - git config --global user.email "${EMAIL}"
-    - git pull || true
     - git checkout $CI_COMMIT_BRANCH
+    - git pull || true
     
     # Push to GitHub
-    - git remote add github https://${GITHUB_TOKEN}@github.com/${GIT_USER}/${CI_PROJECT_NAME}.git ||
-      git remote set-url github https://${GITHUB_TOKEN}@github.com/${GIT_USER}/${CI_PROJECT_NAME}.git
+    - git remote set-url github https://${GITHUB_TOKEN}@github.com/${GIT_USER}/${CI_PROJECT_NAME}.git 2>/dev/null ||
+      git remote add github https://${GITHUB_TOKEN}@github.com/${GIT_USER}/${CI_PROJECT_NAME}.git
     - git push github --force
 
     # Push to GitLab
-    - git remote add gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git ||
-      git remote set-url gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git
-    - git push gitlab --force HEAD:refs/remotes/gitlab/$CI_COMMIT_BRANCH
+    - git remote set-url gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git 2>/dev/null ||
+      git remote add gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git
+    - git push gitlab --force HEAD:refs/heads/$CI_COMMIT_BRANCH
 
     # Debug
     - git branch -a
