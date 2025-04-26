@@ -9,6 +9,7 @@ deploy:
     - git config --global user.name "${FULL_NAME}"
     - git config --global user.email "${EMAIL}"
     - git checkout ${CI_COMMIT_BRANCH}
+    - git fetch --unshallow || true
 
   script:
     - git remote add github https://git:${GITHUB_TOKEN}@github.com/${GIT_USER}/${TARGET_REPO}.git ||
@@ -17,6 +18,6 @@ deploy:
 
     - git remote add gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${TARGET_REPO}.git ||
       git remote set-url gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${TARGET_REPO}.git
-    - git push gitlab ${CI_COMMIT_BRANCH}
+    - git push --force gitlab ${CI_COMMIT_BRANCH}
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
