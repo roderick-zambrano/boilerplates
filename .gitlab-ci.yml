@@ -3,7 +3,7 @@ stages:
 
 deploy:
   stage: deploy
-  image: alpine/git:latest
+  image: git:alpine
   before_script:
     - git config --global user.name "${FULL_NAME}"
     - git config --global user.email "${EMAIL}"
