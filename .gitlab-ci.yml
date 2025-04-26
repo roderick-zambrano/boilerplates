@@ -12,7 +12,6 @@ deploy:
     - git config --global user.name "${FULL_NAME}"
     - git config --global user.email "${EMAIL}"
     - git checkout $CI_COMMIT_BRANCH
-    - git pull
 
 
     # Push to GitHub
