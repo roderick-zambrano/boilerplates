@@ -3,18 +3,13 @@ stages:
 
 deploy:
   stage: deploy
-  image: alpine:latest
-  script:
-    # Install git
-    - apk update && apk add git
-
+  image: alpine/git:latest
+  before_script:
     # Configure required variables and settings
     - git config --global user.name "${FULL_NAME}"
     - git config --global user.email "${EMAIL}"
     - git checkout $CI_COMMIT_BRANCH
-    - git pull
-
-
+  script:
     # Push to GitHub
     - git remote add github https://${GITHUB_TOKEN}@github.com/${USERNAME}/${TARGET_REPO}.git ||
       git remote set-url github https://${GITHUB_TOKEN}@github.com/${USERNAME}/${TARGET_REPO}.git
@@ -25,8 +20,11 @@ deploy:
       git remote set-url gitlab https://${USERNAME}:${GITLAB_TOKEN}@gitlab.com/${USERNAME}/${TARGET_REPO}.git
     - git push gitlab
 
+  after_script:
     # Remove remotes to avoid caching issues
     - echo "Starting cleanup..."
     - git remote remove github
     - git remote remove gitlab
     - echo "Cleanup completed."
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
