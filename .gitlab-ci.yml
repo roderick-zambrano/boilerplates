@@ -4,29 +4,30 @@ stages:
 deploy:
   stage: deploy
   image: $GIT_IMAGE
-  script:
+  before_script:
     # Install git
     - apk update && apk add git
 
     # Configure required variables and settings
     - git config --global user.name "${FULL_NAME}"
     - git config --global user.email "${EMAIL}"
-    - git checkout $CI_COMMIT_BRANCH
+    - if ! git symbolic-ref -q HEAD; then
+        echo "Detached HEAD detected. Attempting to fix..."
+        git checkout -B $CI_COMMIT_BRANCH
+      fi
+    - git branch --set-upstream-to=origin/$CI_COMMIT_BRANCH
     - git pull || true
-    
+
+  script:
     # Push to GitHub
     - git remote set-url github https://${GITHUB_TOKEN}@github.com/${GIT_USER}/${CI_PROJECT_NAME}.git 2>/dev/null ||
       git remote add github https://${GITHUB_TOKEN}@github.com/${GIT_USER}/${CI_PROJECT_NAME}.git
-    - git push github --force
+    - git push github
 
     # Push to GitLab
     - git remote set-url gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git 2>/dev/null ||
       git remote add gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git
-    - git push gitlab --force HEAD:refs/heads/$CI_COMMIT_BRANCH
-
-    # Debug
-    - git branch -a
-    - git config --list | grep remote
+    - git push gitlab
 
     # Remove remotes to avoid caching issues
     - echo "Starting cleanup..."
