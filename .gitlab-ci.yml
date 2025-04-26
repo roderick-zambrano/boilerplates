@@ -15,7 +15,6 @@ deploy:
       git remote set-url github https://git:${GITHUB_TOKEN}@github.com/${GIT_USER}/${CI_PROJECT_NAME}.git
     - git push --force github ${CI_COMMIT_BRANCH}
 
-    # - git remote add gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${TARGET_REPO}.git ||
-
-    - git remote set-url gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git
+    - git remote add gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git ||
+    # - git remote set-url gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git
     - git push --force gitlab ${CI_COMMIT_BRANCH}
