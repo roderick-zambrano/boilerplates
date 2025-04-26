@@ -18,7 +18,50 @@ target = "/run/dbus"
 read_only = true
 [[services.home-assistant.volumes]]
 type = "volume"
-source = "config"
+source = "core-config"
 target = "/config"
 
-[volumes.config]
+[services.mosquitto]
+image = "eclipse-mosquitto"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "mosquitto"
+hostname = "mosquitto"
+network_mode = "host"
+restart = "unless-stopped"
+[[services.mosquitto.volumes]]
+type = "volume"
+source = "mqtt-config"
+target = "/mosquitto/config"
+[[services.mosquitto.volumes]]
+type = "volume"
+source = "mqtt-data"
+target = "/mosquitto/data"
+[[services.mosquitto.volumes]]
+type = "volume"
+source = "mqtt-log"
+target = "/mosquitto/log"
+
+# Optional: govee2mqtt container
+[services.govee2mqtt]
+image = "ghcr.io/wez/govee2mqtt"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "govee2mqtt"
+hostname = "govee2mqtt"
+network_mode = "host"
+restart = "unless-stopped"
+[services.govee2mqtt.environment]
+TZ = "America/Panama"
+GOVEE_EMAIL = "user@example.com"
+GOVEE_PASSWORD = "GoveePassword"
+GOVEE_API_KEY = "RequestGoveeAPIKeyFromGovee"
+GOVEE_MQTT_HOST = "localhost"
+GOVEE_MQTT_PORT = 1883
+GOVEE_MQTT_USER = "mqtt"
+GOVEE_MQTT_PASSWORD = "mqttpassword"
+GOVEE_TEMPERATURE_SCALE = "C"
+RUST_LOG_STYLE = "always"
+
+[volumes.core-config]
+[volumes.mqtt-config]
+[volumes.mqtt-data]
+[volumes.mqtt-log]
