@@ -11,12 +11,12 @@ deploy:
     # Configure required variables and settings
     - git config --global user.name "${FULL_NAME}"
     - git config --global user.email "${EMAIL}"
-    - if ! git symbolic-ref -q HEAD; then
+    - |
+      if ! git symbolic-ref -q HEAD; then
         echo "Detached HEAD detected. Attempting to fix..."
         git checkout -B $CI_COMMIT_BRANCH
       fi
     - git branch --set-upstream-to=origin/$CI_COMMIT_BRANCH
-    - git pull || true
 
   script:
     # Push to GitHub
