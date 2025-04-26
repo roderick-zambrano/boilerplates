@@ -5,6 +5,7 @@ deploy:
   stage: deploy
   image: ${GIT_IMAGE}
   before_script:
+    - apk add bash
     - git config --global user.name "${FULL_NAME}"
     - git config --global user.email "${EMAIL}"
     - git checkout ${CI_COMMIT_BRANCH}
