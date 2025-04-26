@@ -5,11 +5,11 @@ deploy:
   stage: deploy
   image: ${GIT_IMAGE}
   before_script:
-    - apk add git
+    - apk update && apk add git
     - git config --global user.name "${FULL_NAME}"
     - git config --global user.email "${EMAIL}"
     - git checkout ${CI_COMMIT_BRANCH}
-    - git pull
+
   script:
     - git remote add github https://git:${GITHUB_TOKEN}@github.com/${GIT_USER}/${TARGET_REPO}.git ||
       git remote set-url github https://git:${GITHUB_TOKEN}@github.com/${GIT_USER}/${TARGET_REPO}.git
