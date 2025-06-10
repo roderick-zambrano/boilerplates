@@ -5,10 +5,10 @@ services:
       - no-new-privileges:true
     container_name: hbbs
     hostname: hbbs
-    command: hbbs -r example.domain.com:21117
+    command: hbbs -r hbbr:21117
     restart: unless-stopped
     networks:
-      - rustdesk
+      - swag
     depends_on:
       - hbbr
     volumes:
@@ -24,13 +24,13 @@ services:
     command: hbbr
     restart: unless-stopped
     networks:
-      - rustdesk
+      - swag
     volumes:
       - type: volume
         source: data
         target: /root
 networks:
-  rustdesk:
+  swag:
     external: true
 volumes:
   data: {}

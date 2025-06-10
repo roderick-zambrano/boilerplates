@@ -9,7 +9,7 @@ services:
     tty: true
     restart: unless-stopped
     networks:
-      - openproject
+      - swag
     environment:
       OPENPROJECT_SECRET_KEY_BASE: ""
       OPENPROJECT_HOST__NAME: domain.name:80
@@ -26,5 +26,5 @@ volumes:
   pgdata: {}
   assets: {}
 networks:
-  openproject:
+  swag:
     external: true

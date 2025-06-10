@@ -3,7 +3,7 @@ image = "rustdesk/rustdesk-server:latest"
 security_opt = [ "no-new-privileges:true" ]
 container_name = "hbbs"
 hostname = "hbbs"
-command = "hbbs -r example.domain.com:21117" # -k "" if forgeoing obligatory key requirement
+command = "hbbs -r hbbr:21117" # -k "" if forgeoing obligatory key requirement
 restart = "unless-stopped"
 # ports = [
 #   "21115:21115",
@@ -12,7 +12,7 @@ restart = "unless-stopped"
 #   "21118:21118"
 # ]
 networks = [
-  "rustdesk"
+  "swag"
 ]
 depends_on = [
   "hbbr"
@@ -30,7 +30,7 @@ hostname = "hbbr"
 command = "hbbr"
 restart = "unless-stopped"
 networks = [
-    "rustdesk"
+    "swag"
 ]
 # ports = [
 #   "21117:21117",
@@ -41,7 +41,7 @@ type = "volume"
 source = "data"
 target = "/root"
 
-[networks.rustdesk]
+[networks.swag]
 external = true
 
 [volumes.data]

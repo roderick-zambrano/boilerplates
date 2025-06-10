@@ -1,5 +1,3 @@
-version = "3.9"
-
 [services.phpmyadmin]
 image = "phpmyadmin"
 security_opt = [ "no-new-privileges:true" ]
@@ -7,10 +5,7 @@ container_name = "phpmyadmin"
 hostname = "phpmyadmin"
 domainname = "domain.name"
 networks = [
-  "games_db",
-  "kanboard",
-  "speedtest_tracker",
-  "phpmyadmin"
+  "swag"
 ]
 # ports = [
 #   "8082:80"
@@ -24,11 +19,5 @@ source = "/etc/localtime"
 target = "/etc/localtime"
 read_only = true
 
-[networks.games_db]
-external = true
-[networks.kanboard]
-external = true
-[networks.speedtest_tracker]
-external = true
-[networks.phpmyadmin]
+[networks.swag]
 external = true

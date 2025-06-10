@@ -10,7 +10,7 @@ tty = true
 # ]
 restart = "unless-stopped"
 networks = [
-  "openproject"
+  "swag"
 ]
 [services.openproject.environment]
 OPENPROJECT_SECRET_KEY_BASE = ""
@@ -29,5 +29,5 @@ target = "/var/openproject/assets"
 [volumes.pgdata]
 [volumes.assets]
 
-[networks.openproject]
+[networks.swag]
 external = true

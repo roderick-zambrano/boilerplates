@@ -16,7 +16,7 @@ services:
       - --
       - /docker-entrypoint.sh
     networks:
-      - passbolt
+      - swag
     environment:
       APP_FULL_BASE_URL: https://passbolt.domain.name
       DATASOURCES_DEFAULT_HOST: db
@@ -49,7 +49,7 @@ services:
       - no-new-privileges:true
     restart: unless-stopped
     networks:
-      - passbolt
+      - swag
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "true"
       MYSQL_DATABASE: passbolt
@@ -64,5 +64,5 @@ volumes:
   jwt: {}
   db: {}
 networks:
-  passbolt:
+  swag:
     external: true

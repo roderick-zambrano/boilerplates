@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   kanboard:
     image: kanboard/kanboard:latest
@@ -7,7 +6,7 @@ services:
     container_name: kanboard
     hostname: kanboard
     networks:
-      - kanboard
+      - swag
     restart: unless-stopped
     volumes:
       - type: volume
@@ -24,8 +23,9 @@ services:
   db:
     image: mariadb:10.9
     container_name: kanboard-db
+    hostname: kanboard-db
     networks:
-      - kanboard
+      - swag
     restart: unless-stopped
     command: --default-authentication-plugin=mysql_native_password
     volumes:
@@ -43,5 +43,5 @@ volumes:
   ssl: {}
   db: {}
 networks:
-  kanboard:
+  swag:
     external: true

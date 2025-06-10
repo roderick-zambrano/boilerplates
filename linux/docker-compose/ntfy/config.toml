@@ -5,7 +5,7 @@ container_name = "ntfy"
 hostname = "ntfy"
 command = "serve"
 networks = [
-  "ntfy"
+  "swag"
 ]
 # ports = [
 #   "80:80"
@@ -29,5 +29,5 @@ target = "/var/cache/ntfy"
 [volumes.data]
 [volumes.cache]
 
-[networks.ntfy]
+[networks.swag]
 external = true

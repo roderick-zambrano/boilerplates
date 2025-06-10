@@ -6,7 +6,7 @@ container_name = "stirling-pdf"
 hostname = "stirling-pdf"
 # ports = ["8080:8080"]
 networks = [
-  "stirling_pdf"
+  "swag"
 ]
 restart = "unless-stopped"
 [services.stirling-pdf.environment]
@@ -35,5 +35,5 @@ target = "/logs"
 # [volumes.trainingData]
 # [volumes.config]
 
-[networks.stirling_pdf]
+[networks.swag]
 external = true

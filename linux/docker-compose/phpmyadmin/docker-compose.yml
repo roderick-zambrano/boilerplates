@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   phpmyadmin:
     image: phpmyadmin
@@ -8,10 +7,7 @@ services:
     hostname: phpmyadmin
     domainname: domain.name
     networks:
-      - games_db
-      - kanboard
-      - speedtest_tracker
-      - phpmyadmin
+      - swag
     restart: unless-stopped
     environment:
       PMA_ARBITRARY: 1
@@ -21,11 +17,5 @@ services:
         target: /etc/localtime
         read_only: true
 networks:
-  games_db:
-    external: true
-  kanboard:
-    external: true
-  speedtest_tracker:
-    external: true
-  phpmyadmin:
+  swag:
     external: true

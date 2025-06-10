@@ -3,7 +3,7 @@
 image = "vaultwarden/server:latest"
 container_name = "vaultwarden"
 hostname = "vaultwarden"
-networks = ["vaultwarden"]
+networks = ["swag"]
 # ports = [ "80:80" ]
 restart = "unless-stopped"
 
@@ -40,6 +40,5 @@ TZ = "America/Panama"
 [volumes]
 [volumes.data]
 
-[networks]
-[networks.vaultwarden]
+[networks.swag]
 external = true

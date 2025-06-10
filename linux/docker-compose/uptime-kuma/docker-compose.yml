@@ -5,9 +5,7 @@ services:
     hostname: uptime-kuma
     restart: always
     networks:
-      - uptime_kuma
-      - npm
-      - wireguard
+      - swag
     volumes:
       - type: volume
         source: data
@@ -18,9 +16,5 @@ services:
 volumes:
   data: {}
 networks:
-  uptime_kuma:
-    external: true
-  npm:
-    external: true
-  wireguard:
+  swag:
     external: true

@@ -8,7 +8,7 @@ hostname = "games-db"
 # ]
 restart = "unless-stopped"
 networks = [
-  "games_db"
+  "swag"
 ]
 [services.games-db.environment]
 PUID = 1000
@@ -29,5 +29,5 @@ target = "/var/lib/mysql"
 
 [volumes.data]
 
-[networks.games_db]
+[networks.swag]
 external = true

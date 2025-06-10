@@ -4,7 +4,7 @@ services:
     container_name: vaultwarden
     hostname: vaultwarden
     networks:
-      - vaultwarden
+      - swag
     restart: unless-stopped
     volumes:
       - type: volume
@@ -38,5 +38,5 @@ services:
 volumes:
   data: {}
 networks:
-  vaultwarden:
+  swag:
     external: true

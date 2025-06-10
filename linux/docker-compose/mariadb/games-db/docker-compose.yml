@@ -7,7 +7,7 @@ services:
     hostname: games-db
     restart: unless-stopped
     networks:
-      - games_db
+      - swag
     environment:
       PUID: 1000
       PGID: 1000
@@ -26,5 +26,5 @@ services:
 volumes:
   data: {}
 networks:
-  games_db:
+  swag:
     external: true

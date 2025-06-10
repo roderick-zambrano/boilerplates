@@ -1,11 +1,9 @@
-version = "3.9"
-
 [services.speedtest-tracker]
 image = "ghcr.io/alexjustesen/speedtest-tracker:latest"
 security_opt = ["no-new-privileges:true"]
 container_name = "speedtest-tracker"
 hostname = "speedtest-tracker"
-networks = [ "speedtest_tracker" ]
+networks = [ "swag" ]
 # ports = [
 #   "443:443"
 # ]
@@ -40,7 +38,8 @@ target = "/etc/localtime"
 image = "mariadb:10"
 security_opt = ["no-new-privileges:true"]
 container_name = "speedtest-db"
-networks = [ "speedtest_tracker" ]
+hostname = "speedtest-db"
+networks = [ "swag" ]
 restart = "always"
 [services.db.environment]
 MARIADB_DATABASE = "speedtest_tracker"
@@ -59,5 +58,5 @@ target = "/etc/localtime"
 [volumes.data]
 [volumes.db]
 
-[networks.speedtest_tracker]
+[networks.swag]
 external = true

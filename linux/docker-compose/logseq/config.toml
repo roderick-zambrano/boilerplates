@@ -3,7 +3,7 @@ image = "ghcr.io/logseq/logseq-webapp:latest"
 security_opt = [ "no-new-privileges:true" ]
 container_name = "logseq"
 hostname = "logseq"
-networks = [ "logseq" ]
+networks = [ "swag" ]
 # ports = [
 #   "3443:443"
 # ]
@@ -22,5 +22,5 @@ target = "/etc/nginx/conf.d"
 [volumes.certs]
 [volumes.nginx_conf]
 
-[networks.logseq]
+[networks.swag]
 external = true

@@ -6,7 +6,7 @@ services:
     container_name: logseq
     hostname: logseq
     networks:
-      - logseq
+      - swag
     restart: always
     volumes:
       - type: volume
@@ -19,5 +19,5 @@ volumes:
   certs: {}
   nginx_conf: {}
 networks:
-  logseq:
+  swag:
     external: true

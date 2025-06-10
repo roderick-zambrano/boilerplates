@@ -6,7 +6,7 @@
     "no-new-privileges:true"
   ]
   networks = [
-    "portainer"
+    "swag"
   ]
 [[services.portainer.volumes]]
 type = "bind"
@@ -22,6 +22,6 @@ read_only = true
 type = "volume"
 source = "data"
 target = "/data"
-[networks.portainer]
+[networks.swag]
   external = true
 [volumes.data]

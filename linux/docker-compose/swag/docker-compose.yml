@@ -14,7 +14,7 @@ services:
       PUID: 1000
       PGID: 1000
       TZ: America/Panama
-      URL: devrod.tech
+      URL: domain.name
       VALIDATION: dns
       SUBDOMAINS: wildcard
       CERTPROVIDER: ""

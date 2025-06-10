@@ -7,7 +7,7 @@ services:
     hostname: epicgames-freegames-node
     domainname: domain.name
     networks:
-      - epicgames_freegames_node
+      - swag
     restart: unless-stopped
     environment:
       TZ: America/Panama
@@ -22,5 +22,5 @@ services:
 volumes:
   data: {}
 networks:
-  epicgames_freegames_node:
+  swag:
     external: true

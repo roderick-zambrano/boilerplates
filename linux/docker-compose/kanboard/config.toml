@@ -1,5 +1,3 @@
-version = "3.9"
-
 [services]
 [services.kanboard]
 image = "kanboard/kanboard:latest"
@@ -7,7 +5,7 @@ security_opt = [ "no-new-privileges:true" ]
 container_name = "kanboard"
 hostname = "kanboard"
 networks = [
-  "kanboard"
+  "swag"
 ]
 # ports = [
 #   "80:80",
@@ -32,8 +30,9 @@ DATABASE_URL = "mysql://kanboard:user-password@db/kanboard"
 [services.db]
 image = "mariadb:10.9"
 container_name = "kanboard-db"
+hostname = "kanboard-db"
 networks = [
-  "kanboard"
+  "swag"
 ]
 restart = "unless-stopped"
 command = "--default-authentication-plugin=mysql_native_password"
@@ -52,5 +51,5 @@ MYSQL_PASSWORD = "user-password"
 [volumes.ssl]
 [volumes.db]
 
-[networks.kanboard]
+[networks.swag]
 external = true

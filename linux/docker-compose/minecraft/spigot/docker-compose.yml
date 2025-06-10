@@ -6,8 +6,7 @@ services:
     container_name: spigot-minecraft
     hostname: spigot-minecraft
     networks:
-      - spigot_minecraft
-      - games_db
+      - swag
     restart: unless-stopped
     environment:
       EULA: true
@@ -27,7 +26,5 @@ services:
 volumes:
   data: {}
 networks:
-  spigot_minecraft:
-    external: true
-  games_db:
+  swag:
     external: true

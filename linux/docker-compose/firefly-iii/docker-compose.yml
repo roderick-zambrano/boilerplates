@@ -5,7 +5,7 @@ services:
     container_name: firefly-core
     env_file: firefly-core.env
     networks:
-      - firefly_iii
+      - swag
     depends_on:
       - firefly-db
     restart: always
@@ -82,7 +82,7 @@ services:
     restart: always
     env_file: .firefly-db.env
     networks:
-      - firefly_iii
+      - swag
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
       MYSQL_USER: firefly
@@ -98,7 +98,7 @@ services:
     hostname: firefly-importer
     restart: always
     networks:
-      - firefly_iii
+      - swag
     depends_on:
       - firefly-core
     env_file: .firefly-importer.env
@@ -137,10 +137,10 @@ services:
     container_name: firefly-cron
     command: sh -c "echo \"0 3 * * * wget -qO- http://firefly-core:8080/api/v1/cron/STATIC_CRON_TOKENValue\" | crontab - && crond -f -L /dev/stdout"
     networks:
-      - firefly_iii
+      - swag
 volumes:
   upload: {}
   data: {}
 networks:
-  firefly_iii:
+  swag:
     external: true

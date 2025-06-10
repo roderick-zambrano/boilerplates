@@ -4,8 +4,7 @@ security_opt = ["no-new-privileges:true"]
 container_name = "spigot-minecraft"
 hostname = "spigot-minecraft"
 networks = [
-  "spigot_minecraft",
-  "games_db"
+  "swag"
 ]
 # ports = [
 #   "25565:25565",
@@ -49,8 +48,5 @@ read_only = true
 [volumes]
 [volumes.data]
 
-[networks]
-[networks.spigot_minecraft]
-external = true
-[networks.games_db]
+[networks.swag]
 external = true

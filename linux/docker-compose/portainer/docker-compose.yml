@@ -6,7 +6,7 @@ services:
     security_opt:
       - no-new-privileges:true
     networks:
-      - portainer
+      - swag
     volumes:
       - type: bind
         source: /etc/localtime
@@ -20,7 +20,7 @@ services:
         source: data
         target: /data
 networks:
-  portainer:
+  swag:
     external: true
 volumes:
   data: {}

@@ -5,7 +5,7 @@ hostname = "firefly-core"
 container_name = "firefly-core"
 env_file = "firefly-core.env"
 networks = [
-  "firefly_iii"
+  "swag"
 ]
 # ports = [
 #   "80:8080"
@@ -87,7 +87,7 @@ container_name = "firefly-db"
 hostname = "firefly-db"
 restart = "always"
 env_file = ".firefly-db.env"
-networks = ["firefly_iii"]
+networks = ["swag"]
 [services.firefly-db.environment]
 MYSQL_RANDOM_ROOT_PASSWORD = "yes"
 MYSQL_USER = "firefly"
@@ -104,7 +104,7 @@ container_name = "firefly-importer"
 hostname = "firefly-importer"
 restart = "always"
 networks = [
-  "firefly_iii"
+  "swag"
 ]
 # ports = [
 #   "81:8080"
@@ -148,13 +148,13 @@ image = "alpine"
 restart = "always"
 container_name = "firefly-cron"
 command = 'sh -c "echo \"0 3 * * * wget -qO- http://firefly-core:8080/api/v1/cron/STATIC_CRON_TOKENValue\" | crontab - && crond -f -L /dev/stdout"'
-networks = ["firefly_iii"]
+networks = ["swag"]
 
 [volumes]
 [volumes.upload]
 [volumes.data]
 
 [networks]
-[networks.firefly_iii]
+[networks.swag]
 external = true
 
