@@ -9,7 +9,7 @@ services:
       - 5001:5001
     restart: unless-stopped
     networks:
-      - dockge
+      - swag
     environment:
       DOCKGE_STACKS_DIR: /opt/stacks
     volumes:
@@ -29,5 +29,5 @@ services:
 volumes:
   data: {}
 networks:
-  dockge:
+  swag:
     external: true

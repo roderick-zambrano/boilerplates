@@ -8,7 +8,7 @@ ports = [
 ]
 restart = "unless-stopped"
 networks = [
-  "dockge"
+  "swag"
 ]
 [services.dockge.environment]
 DOCKGE_STACKS_DIR = "/opt/stacks"
@@ -32,5 +32,5 @@ target = "/app/data"
 
 [volumes.data]
 
-[networks.dockge]
+[networks.swag]
 external = true
