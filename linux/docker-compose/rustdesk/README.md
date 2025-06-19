@@ -14,4 +14,6 @@ The next step is to port forward all the necessary ports listed in the `hbbr` an
 
 This might not seem obvious at first, but a RustDesk client requires an active display to function. This means that server computers without a monitor cannot be accessed with RustDesk easily, even if you successfully install the application by remote desktop from another protocol. RustDesk is a screen-sharing control application.
 
-Version 1.1.11-1 introduced mandatory client-side key requirement. When the container starts, it generates an id_ed25519 key pair if none already exists in the data volume. To avoid requiring the use of this key in the client side, you must run the `hbbs` command with a `-k ""` flag, for empty key. Otherwise, the client will require the content of the id_ed25519.pub key in the Key field of the application to connect to other devices.
+Version 1.1.11-1 introduced mandatory client-side key requirement. When the container starts, it generates an id_ed25519 key pair if none already exists in the data volume. To avoid requiring the use of this key in the client side, you must run the `hbbs` command with a `-k ""` flag, for empty key. Otherwise, the client will require the content of the id_ed25519.pub key in the Key field of the application for outgoing connections to other devices.
+
+In the client version of RustDesk, specify both the ID and Relay server URLs. ID server may work for local devices sharing a network, but devices outside of the network require going through the relay. This has to be explicitly defined for it to work as expected.

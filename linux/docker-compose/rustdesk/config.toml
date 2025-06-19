@@ -3,7 +3,7 @@ image = "rustdesk/rustdesk-server:latest"
 security_opt = [ "no-new-privileges:true" ]
 container_name = "hbbs"
 hostname = "hbbs"
-command = "hbbs -r hbbr:21117" # -k "" if forgeoing obligatory key requirement
+command = "hbbs -k 'secure_private_key_or_empty_if_open' -r hbbr:21117" # -k "" if forgeoing obligatory key requirement
 restart = "unless-stopped"
 # ports = [
 #   "21115:21115",
