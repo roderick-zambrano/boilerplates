@@ -21,7 +21,7 @@ deploy:
       else
         git remote add github https://${GITHUB_TOKEN}@github.com/${GIT_USER}/${CI_PROJECT_NAME}.git
       fi
-    - git push -u github $CI_COMMIT_BRANCH
+    - git push -u github $CI_COMMIT_BRANCH --force
 
     # GitLab remote
 
@@ -31,7 +31,7 @@ deploy:
       else
         git remote add gitlab https://gitlab-ci-token:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git
       fi
-    - git push -u gitlab $CI_COMMIT_BRANCH
+    - git push -u gitlab $CI_COMMIT_BRANCH --force
 
     # Cleanup remotes to avoid caching issues
     - git remote remove github || true
