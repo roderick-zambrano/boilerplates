@@ -13,7 +13,14 @@ networks = [ "swag" ]
 restart = "always"
 shm_size = "256m"
 [services.gitlab.environment]
-GITLAB_OMNIBUS_CONFIG = "external_url 'http://gitlab.domain.name'"
+GITLAB_OMNIBUS_CONFIG = """external_url 'http://gitlab.domain.name'
+registry_external_url 'https://registry.domain.name'
+gitlab_rails['registry_enabled'] = true
+gitlab_rails['registry_host'] = "registry.domain.name"
+gitlab_rails['registry_api_url'] = "http://localhost:5000"
+gitlab_rails['registry_key_path'] = "/var/opt/gitlab/gitlab-rails/etc/gitlab-registry.key"
+gitlab_rails['registry_path'] = "/var/opt/gitlab/gitlab-rails/shared/registry
+"""
 [[services.gitlab.volumes]]
 type = "bind"
 source = "/etc/localtime"
