@@ -20,6 +20,8 @@ gitlab_rails['registry_host'] = "registry.domain.name"
 gitlab_rails['registry_api_url'] = "http://localhost:5000"
 gitlab_rails['registry_key_path'] = "/var/opt/gitlab/gitlab-rails/etc/gitlab-registry.key"
 gitlab_rails['registry_path'] = "/var/opt/gitlab/gitlab-rails/shared/registry
+registry['enable'] = true
+registry['registry_http_addr'] = "0.0.0.0:5000"
 """
 [[services.gitlab.volumes]]
 type = "bind"

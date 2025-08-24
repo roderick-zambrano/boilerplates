@@ -32,3 +32,10 @@ Notify.test_email('email@example.com', 'Subject Of Message', 'Body of message').
 ## Notes
 
 GitLab runners can be configured with the use of TOML files found in their config directory. Runners and CI configurations can have inconsistencies if different images are listed instead of only one image.
+
+It is possible to manually trigger the reconfiguration of gitlab through the following command:
+
+```bash
+gitlab-ctl reconfigure
+```
+
