@@ -25,8 +25,8 @@ deploy:
     - git push github
 
     # Push to GitLab
-    - git remote set-url gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git 2>/dev/null ||
-      git remote add gitlab https://${GIT_USER}:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git
+    - git remote set-url gitlab https://gitlab-ci-token:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git 2>/dev/null ||
+      git remote add gitlab https://gitlab-ci-token:${GITLAB_TOKEN}@gitlab.com/${GIT_USER}/${CI_PROJECT_NAME}.git
     - git push gitlab
 
     # Remove remotes to avoid caching issues
