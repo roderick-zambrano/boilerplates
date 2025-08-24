@@ -12,7 +12,7 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://gitlab.domain.name'
-        registry_external_url 'https://registry.domain.name'
+        registry_external_url 'http://registry.domain.name'
         gitlab_rails['registry_enabled'] = true
         gitlab_rails['registry_host'] = "registry.domain.name"
         gitlab_rails['registry_api_url'] = "http://localhost:5000"
