@@ -21,7 +21,7 @@ deploy:
       else
         git remote add github https://${GITHUB_TOKEN}@github.com/${GIT_USER}/${CI_PROJECT_NAME}.git
       fi
-    - git push -u github $CI_COMMIT_BRANCH --force
+    - git push -u github HEAD:$CI_COMMIT_BRANCH --force
 
     # GitLab remote
 
