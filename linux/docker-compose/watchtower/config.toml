@@ -4,6 +4,12 @@ security_opt = [ "no-new-privileges:true" ]
 container_name = "watchtower"
 hostname = "watchtower"
 restart = "unless-stopped"
+[services.watchtower.environment]
+WATCHTOWER_TIMEOUT = "30s"
+WATCHTOWER_LOG_FORMAT = "pretty"
+WATCHTOWER_NOTIFICATIONS = "shoutrrr"
+WATCHTOWER_NOTIFICATION_URL = "ntfy://token@domain.name/channel"
+DOCKER_CONFIG = "/config"
 [[services.watchtower.volumes]]
 type = "bind"
 source = "/etc/localtime"
@@ -13,3 +19,10 @@ read_only = true
 type = "bind"
 source = "/var/run/docker.sock"
 target = "/var/run/docker.sock"
+[[services.watchtower.volumes]]
+type = "volume"
+source = "config"
+target = "/config"
+
+[volumes.config]
+

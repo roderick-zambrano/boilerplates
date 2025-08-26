@@ -6,6 +6,12 @@ services:
     container_name: watchtower
     hostname: watchtower
     restart: unless-stopped
+    environment:
+      WATCHTOWER_TIMEOUT: 30s
+      WATCHTOWER_LOG_FORMAT: pretty
+      WATCHTOWER_NOTIFICATIONS: shoutrrr
+      WATCHTOWER_NOTIFICATION_URL: ntfy://token@domain.name/channel
+      DOCKER_CONFIG: /config
     volumes:
       - type: bind
         source: /etc/localtime
@@ -14,3 +20,8 @@ services:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
+      - type: volume
+        source: config
+        target: /config
+volumes:
+  config: {}
