@@ -39,3 +39,4 @@ It is possible to manually trigger the reconfiguration of gitlab through the fol
 gitlab-ctl reconfigure
 ```
 
+Some options have to be enabled through configuration options, be it environment variables for OMNIBUS, jumping into the gitlab-cli, changing the rails configuration, or a combination of these. The registry functionality is enabled in this form for example.
