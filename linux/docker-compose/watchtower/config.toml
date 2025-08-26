@@ -9,7 +9,7 @@ WATCHTOWER_TIMEOUT = "30s"
 WATCHTOWER_LOG_FORMAT = "pretty"
 WATCHTOWER_NOTIFICATIONS = "shoutrrr"
 WATCHTOWER_NOTIFICATION_URL = "ntfy://token@domain.name/channel"
-DOCKER_CONFIG = "/config"
+# DOCKER_CONFIG = "/config"
 [[services.watchtower.volumes]]
 type = "bind"
 source = "/etc/localtime"
@@ -20,9 +20,9 @@ type = "bind"
 source = "/var/run/docker.sock"
 target = "/var/run/docker.sock"
 [[services.watchtower.volumes]]
-type = "volume"
-source = "config"
-target = "/config"
+type = "bind"
+source = "source/.docker/config.json"
+target = "/config.json"
 
-[volumes.config]
+# [volumes.config]
 
