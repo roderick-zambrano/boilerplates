@@ -23,6 +23,10 @@ services:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
+      - type: bind
+        source: source/.docker/config.json
+        target: /root/.docker/config.json
+        read_only: true
       - type: volume
         source: data
         target: /app/data
