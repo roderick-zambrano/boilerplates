@@ -50,6 +50,16 @@ error from daemon in stream: Error grabbing logs: invalid character ‘\x00’ l
 ```
 The log file is probably corrupted. You can simply rebuild the container to overwrite the log file.
 
+## Private Registries
+
+Some services such as watchtower or Dockge that you may use to pull an image from private repositories or repositories that require authentication will fail until you configure authentication for them. To solve this issue, try using these suggested commands in your host machine:
+
+```
+TOKEN=GenerateFreshPATForThis
+echo "$TOKEN" | docker login private.registry.com -u target_username --password-stdin
+```
+
+This creates a `/home/user/.docker/config.json` file that can then be bound as a readonly volume/file into the containers that require it. Make sure to check the documentation of the service or app you're hosting to set it up correctly.
 
 ## Container Permission Errors
 
