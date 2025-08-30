@@ -11,16 +11,16 @@ services:
     depends_on:
       - database
     environment:
-      NEXT_PUBLIC_WEBAPP_URL: http://localhost:3000
-      NEXT_PUBLIC_API_V2_URL: http://localhost:5555/api/v2
+      NEXT_PUBLIC_WEBAPP_URL: http://domain.name:3000
+      NEXT_PUBLIC_API_V2_URL: http://domain.name:5555/api/v2
       NEXTAUTH_SECRET: secret
       CALENDSO_ENCRYPTION_KEY: secret
       POSTGRES_USER: unicorn_user
       POSTGRES_PASSWORD: magical_password
       POSTGRES_DB: calendso
-      DATABASE_HOST: database:5432
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
-      DATABASE_DIRECT_URL: ${DATABASE_URL}
+      DATABASE_HOST: calcom-database:5432
+      DATABASE_URL: postgresql://unicorn_user:magical_password@calcom-database:5432/calendso
+      DATABASE_DIRECT_URL: postgresql://calcom:P5kV8)FR{MwdA+Kpp6@calcom-database:5432/calendso
     volumes:
       - type: bind
         source: /etc/localtime

@@ -14,8 +14,8 @@ networks = [
 depends_on = ["database"]
 # env_file = ".env"
 [services.calcom.environment]
-NEXT_PUBLIC_WEBAPP_URL = "http://calcom:3000"
-NEXT_PUBLIC_API_V2_URL = "http://calcom:5555/api/v2"
+NEXT_PUBLIC_WEBAPP_URL = "http://domain.name:3000"
+NEXT_PUBLIC_API_V2_URL = "http://domain.name:5555/api/v2"
 # Use `openssl rand -base64 32` to generate a key
 NEXTAUTH_SECRET = "secret"
 # Encryption key that will be used to encrypt CalDAV credentials, choose a random string, for example with `dd if=/dev/urandom bs=1K count=1 | md5sum`
