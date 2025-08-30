@@ -11,8 +11,8 @@ services:
     depends_on:
       - database
     environment:
-      NEXT_PUBLIC_WEBAPP_URL: http://domain.name:3000
-      NEXT_PUBLIC_API_V2_URL: http://domain.name:5555/api/v2
+      NEXT_PUBLIC_WEBAPP_URL: https://domain.name:3000
+      NEXT_PUBLIC_API_V2_URL: https://domain.name:5555/api/v2
       NEXTAUTH_SECRET: secret
       CALENDSO_ENCRYPTION_KEY: secret
       POSTGRES_USER: unicorn_user
