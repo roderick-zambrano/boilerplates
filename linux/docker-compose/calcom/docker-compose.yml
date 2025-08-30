@@ -1,0 +1,48 @@
+services:
+  calcom:
+    image: calcom.docker.scarf.sh/calcom/cal.com
+    security_opt:
+      - no-new-privileges:true
+    container_name: calcom
+    hostname: calcom
+    restart: unless-stopped
+    networks:
+      - swag
+    depends_on:
+      - database
+    environment:
+      NEXT_PUBLIC_WEBAPP_URL: http://localhost:3000
+      NEXT_PUBLIC_API_V2_URL: http://localhost:5555/api/v2
+      NEXTAUTH_SECRET: secret
+      CALENDSO_ENCRYPTION_KEY: secret
+      POSTGRES_USER: unicorn_user
+      POSTGRES_PASSWORD: magical_password
+      POSTGRES_DB: calendso
+      DATABASE_HOST: database:5432
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
+      DATABASE_DIRECT_URL: ${DATABASE_URL}
+    volumes:
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+  database:
+    container_name: calcom-database
+    image: postgres
+    restart: unless-stopped
+    networks:
+      - swag
+    environment:
+      POSTGRES_USER: unicorn_user
+      POSTGRES_PASSWORD: magical_password
+      POSTGRES_DB: calendso
+      DATABASE_HOST: database:5432
+    volumes:
+      - type: volume
+        source: database
+        target: /var/lib/postgresql/data/
+volumes:
+  database: {}
+networks:
+  swag:
+    external: true

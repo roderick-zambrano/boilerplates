@@ -1,0 +1,64 @@
+[services.calcom]
+image = "calcom.docker.scarf.sh/calcom/cal.com"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "calcom"
+hostname = "calcom"
+# domainname = "toplevel.domain"
+# ports = [
+#   "3000:3000"
+# ]
+restart = "unless-stopped"
+networks = [
+  "swag"
+]
+depends_on = ["database"]
+# env_file = ".env"
+[services.calcom.environment]
+NEXT_PUBLIC_WEBAPP_URL = "http://calcom:3000"
+NEXT_PUBLIC_API_V2_URL = "http://calcom:5555/api/v2"
+# Use `openssl rand -base64 32` to generate a key
+NEXTAUTH_SECRET = "secret"
+# Encryption key that will be used to encrypt CalDAV credentials, choose a random string, for example with `dd if=/dev/urandom bs=1K count=1 | md5sum`
+CALENDSO_ENCRYPTION_KEY = "secret"
+POSTGRES_USER = "unicorn_user"
+POSTGRES_PASSWORD = "magical_password"
+POSTGRES_DB = "calendso"
+DATABASE_HOST = "calcom-database:5432"
+DATABASE_URL = "postgresql://unicorn_user:magical_password@calcom-database:5432/calendso"
+DATABASE_DIRECT_URL ="postgresql://calcom:P5kV8)FR{MwdA+Kpp6@calcom-database:5432/calendso"
+# E-mail settings
+# Configures the global From: header whilst sending emails.
+# EMAIL_FROM_NAME=YourOrganizationName
+# EMAIL_FROM=notifications@example.com
+# Configure SMTP settings (@see https://nodemailer.com/smtp/).
+# EMAIL_SERVER_HOST=smtp.example.com
+# EMAIL_SERVER_PORT=587
+# EMAIL_SERVER_USER=email_user
+# EMAIL_SERVER_PASSWORD=email_password
+[[services.calcom.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+
+[services.database]
+container_name = "calcom-database"
+image = "postgres"
+restart = "unless-stopped"
+# env-file = ".env"
+networks = [
+  "swag"
+]
+[services.database.environment]
+POSTGRES_USER = "unicorn_user"
+POSTGRES_PASSWORD = "magical_password"
+POSTGRES_DB = "calendso"
+DATABASE_HOST = "database:5432"
+[[services.database.volumes]]
+type = "volume"
+source = "database"
+target = "/var/lib/postgresql/data/"
+
+[volumes.database]
+[networks.swag]
+external = true
