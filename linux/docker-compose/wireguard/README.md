@@ -64,7 +64,7 @@ sudo apt-get install wireguard resolvconf # resolvconf helps with domain name re
 Starting WireGuard VPN on a configured client machine:
 ```bash
 wg-quick up wg0
-````
+```
 [!NOTE]
 wg0 is the name of the configuration file on the client machine which should be located on the target wireguard configuration folderon the client. This is a parameter that can vary based on the name of the configuration file itself, which should match.
 
