@@ -1,11 +1,10 @@
-version = "3.8"
-
 [services.wireguard]
 image = "linuxserver/wireguard:latest"
+security_opt = [ "no-new-privileges:true" ]
 container_name = "wireguard"
+hostname = "wireguard"
 cap_add = [
-  "NET_ADMIN",
-  "SYS_MODULE"
+  "NET_ADMIN"
 ]
 ports = [
   "51820:51820/udp"
@@ -29,6 +28,7 @@ target = "/config"
 type = "bind"
 source = "/lib/modules"
 target = "/lib/modules"
+read_only = true
 
 [[services.wireguard.volumes]]
 type = "bind"
@@ -43,8 +43,8 @@ TZ = "America/Panama"
 SERVERURL = "domain.name"
 SERVERPORT = 51820
 PEERS = 7
-PEERDNS = "auto"
-INTERNAL_SUBNET = "10.13.13.0"
+PEERDNS = "1.1.1.1"
+INTERNAL_SUBNET = "10.13.13.0/24"
 
 [volumes]
 [volumes.data]

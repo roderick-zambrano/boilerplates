@@ -1,11 +1,12 @@
-version: "3.8"
 services:
   wireguard:
     image: linuxserver/wireguard:latest
+    security_opt:
+      - no-new-privileges:true
     container_name: wireguard
+    hostname: wireguard
     cap_add:
       - NET_ADMIN
-      - SYS_MODULE
     ports:
       - 51820:51820/udp
     sysctls:
@@ -18,6 +19,7 @@ services:
       - type: bind
         source: /lib/modules
         target: /lib/modules
+        read_only: true
       - type: bind
         source: /etc/localtime
         target: /etc/localtime
@@ -29,7 +31,7 @@ services:
       SERVERURL: domain.name
       SERVERPORT: 51820
       PEERS: 7
-      PEERDNS: auto
-      INTERNAL_SUBNET: 10.13.13.0
+      PEERDNS: 1.1.1.1
+      INTERNAL_SUBNET: 10.13.13.0/24
 volumes:
   data: {}
