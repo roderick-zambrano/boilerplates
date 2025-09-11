@@ -44,7 +44,7 @@ Some other steps are required but this is the extent of the guide to at least of
 The Wireguard container is set up to host a Wireguard VPN on the server side to which Wireguard clients can connect.
 
 `cap_add` is used to add `NET_ADMIN` and `SYS_MODULE` capabilities. Besides this, an installation of `kmod-wireguard` might be necessary on CentOS-based systems. Installing the kernel module allows the `/lib/modules` bind to successfully use the wireguard module in the host machine.
-[!NOTE]
+>[!NOTE]
 SYS_MODULE is not necessary if the wireguard kernel module is installed.
 
 The server URL should point to the host machine's IP or to the relevant domainname.
