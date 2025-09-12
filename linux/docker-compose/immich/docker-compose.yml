@@ -39,7 +39,7 @@ services:
         source: model-cache
         target: /usr/src/app/upload
   redis:
-    image: registry.hub.docker.com/library/redis:6.2-alpine@sha256:84882e87b54734154586e5f8abd4dce69fe7311315e2fc6d67c29614c8de2672
+    image: docker.io/valkey/valkey:8-bookworm@sha256:a137a2b60aca1a75130022d6bb96af423fefae4eb55faf395732db3544803280
     security_opt:
       - no-new-privileges:true
     container_name: redis
@@ -55,6 +55,8 @@ services:
       - no-new-privileges:true
     container_name: immich-database
     hostname: immich-database
+    env_file:
+      - .env
     networks:
       - swag
     labels:
