@@ -27,6 +27,7 @@ EMAIL = "" #optional"
 ONLY_SUBDOMAINS = false #optional
 EXTRA_DOMAINS = "" #optional
 STAGING = true #optional
+SWAG_AUTORELOAD = true
 [[services.swag.volumes]]
 type = "volume"
 source = "config"

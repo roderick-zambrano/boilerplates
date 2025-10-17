@@ -24,6 +24,7 @@ services:
       ONLY_SUBDOMAINS: false
       EXTRA_DOMAINS: ""
       STAGING: true
+      SWAG_AUTORELOAD: true
     volumes:
       - type: volume
         source: config
