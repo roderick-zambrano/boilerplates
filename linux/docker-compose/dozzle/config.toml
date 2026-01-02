@@ -1,0 +1,26 @@
+[services]
+[services.dozzle]
+image = "amir20/dozzle:latest"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "dozzle"
+hostname = "dozzle"
+restart = "unless-stopped"
+networks = [
+  "swag" 
+]
+# ports = ["8080:8080"]
+[services.dozzle.environment]
+DOZZLE_AUTH_PROVIDER = "simple"
+[[services.dozzle.volumes]]
+type = "bind"
+source = "/var/run/docker.sock"
+target = "/var/run/docker.sock"
+read_only = true
+[[services.dozzle.volumes]]
+type = "volume"
+source = "data"
+target = "/data"
+
+[volumes.data]
+[networks.swag]
+external = true
