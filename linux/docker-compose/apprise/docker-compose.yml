@@ -1,0 +1,32 @@
+services:
+  apprise:
+    image: caronc/apprise:latest
+    security_opt:
+      - no-new-privileges:true
+    container_name: apprise
+    hostname: apprise
+    networks:
+      - swag
+    user: 1000:1000
+    environment:
+      APPRISE_STATEFUL_MODE: simple
+      APPRISE_WORKER_COUNT: "1"
+      APPRISE_ADMIN: "y"
+      TZ: America/Panama
+    volumes:
+      - type: volume
+        source: config
+        target: /config
+      - type: volume
+        source: plugin
+        target: /plugin
+      - type: volume
+        source: attach
+        target: /attach
+volumes:
+  config: {}
+  plugin: {}
+  attach: {}
+networks:
+  swag:
+    external: true
