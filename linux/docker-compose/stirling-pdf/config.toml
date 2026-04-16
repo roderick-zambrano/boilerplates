@@ -26,14 +26,14 @@ target = "/logs"
 # type = "volume"
 # source = "trainingData"
 # target = "/usr/share/tessdata"
-# [[services.stirling-pdf.volumes]]
-# type = "volume"
-# source = "config"
-# target = "/configs"
+[[services.stirling-pdf.volumes]]
+type = "volume"
+source = "config"
+target = "/configs"
 
 [volumes.logs]
 # [volumes.trainingData]
-# [volumes.config]
+[volumes.config]
 
 [networks.swag]
 external = true

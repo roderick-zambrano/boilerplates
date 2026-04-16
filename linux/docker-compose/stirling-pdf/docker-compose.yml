@@ -6,7 +6,7 @@ services:
     container_name: stirling-pdf
     hostname: stirling-pdf
     networks:
-      - stirling_pdf
+      - swag
     restart: unless-stopped
     environment:
       DOCKER_ENABLE_SECURITY: false
@@ -20,8 +20,12 @@ services:
       - type: volume
         source: logs
         target: /logs
+      - type: volume
+        source: config
+        target: /configs
 volumes:
   logs: {}
+  config: {}
 networks:
-  stirling_pdf:
+  swag:
     external: true
