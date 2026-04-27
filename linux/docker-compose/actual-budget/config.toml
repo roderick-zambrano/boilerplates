@@ -1,0 +1,24 @@
+[services.actual-server]
+image = "docker.io/actualbudget/actual-server:latest"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "actual-server"
+networks = [
+  "swag"
+]
+
+# ports = ["5006:5006"]
+restart = "unless-stopped"
+[[services.actual-server.volumes]]
+type = "volume"
+source = "data"
+target = "/data"
+[services.actual-server.healthcheck]
+test = ["CMD-SHELL", "node src/scripts/health-check.js"]
+interval = "60s"
+timeout = "10s"
+retries = 3
+start_period = "20s"
+
+[volumes.data]
+[networks.swag]
+external = true
