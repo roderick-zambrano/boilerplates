@@ -6,6 +6,7 @@ hostname = "home-assistant"
 privileged = true
 network_mode = "host"
 restart = "unless-stopped"
+devices = [ "/dev/ttyUSB0:/dev/ttyUSB0" ]
 [[services.home-assistant.volumes]]
 type = "bind"
 source = "/etc/localtime"

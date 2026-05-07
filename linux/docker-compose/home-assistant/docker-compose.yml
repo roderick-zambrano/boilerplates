@@ -8,6 +8,8 @@ services:
     privileged: true
     network_mode: host
     restart: unless-stopped
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
     volumes:
       - type: bind
         source: /etc/localtime
