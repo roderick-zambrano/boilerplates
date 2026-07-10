@@ -1,0 +1,30 @@
+[services.ollama]
+image = "ollama/ollama:latest"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "ollama"
+hostname = "ollama"
+restart = "unless-stopped"
+networks = [
+  "swag"
+]
+ports = [
+  "11434:11434"
+]
+[services.ollama.environment]
+TZ = "America/Panama"
+OLLAMA_KEEP_ALIVE = "10m"
+OLLAMA_NUM_PARALLEL = 1
+[[services.ollama.volumes]]
+type = "volume"
+source = "models"
+target = "/root/.ollama"
+[[services.ollama.volumes]]
+type = "bind"
+source = "/etc/localtime"
+target = "/etc/localtime"
+read_only = true
+
+[volumes.models]
+
+[networks.swag]
+external = true
