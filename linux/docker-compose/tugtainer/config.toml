@@ -1,0 +1,28 @@
+
+[services]
+[services.tugtainer]
+image = "quenary/tugtainer:latest"
+security_opt = [ "no-new-privileges:true" ]
+container_name = "tugtainer"
+hostname = "tugtainer"
+# ports = ["9412:80"]
+restart = "unless-stopped"
+networks = [
+  "swag"
+]
+[services.tugtainer.environment]
+AGENT_SECRET = "alphanumeric value"
+[[services.tugtainer.volumes]]
+type = "volume"
+source = "data"
+target = "/tugtainer"
+[[services.tugtainer.volumes]]
+type = "bind"
+source = "/var/run/docker.sock"
+target = "/var/run/docker.sock"
+[services.tugtainer.labels]
+"dev.quenary.tugtainer.protected" = true
+
+[volumes.data]
+[networks.swag]
+external = true

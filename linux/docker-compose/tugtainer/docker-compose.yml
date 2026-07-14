@@ -1,0 +1,26 @@
+services:
+  tugtainer:
+    image: quenary/tugtainer:latest
+    security_opt:
+      - no-new-privileges:true
+    container_name: tugtainer
+    hostname: tugtainer
+    restart: unless-stopped
+    networks:
+      - swag
+    environment:
+      AGENT_SECRET: alphanumeric value
+    volumes:
+      - type: volume
+        source: data
+        target: /tugtainer
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    labels:
+      dev.quenary.tugtainer.protected: true
+volumes:
+  data: {}
+networks:
+  swag:
+    external: true
