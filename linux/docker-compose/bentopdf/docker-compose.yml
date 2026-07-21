@@ -1,0 +1,18 @@
+services:
+  bento-pdf:
+    image: ghcr.io/alam00000/bentopdf:sha-45496fc
+    security_opt:
+      - no-new-privileges:true
+    container_name: bento-pdf
+    hostname: bento-pdf
+    networks:
+      - swag
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+networks:
+  swag:
+    external: true
