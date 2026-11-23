@@ -1,0 +1,29 @@
+services:
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    security_opt:
+      - no-new-privileges:true
+    container_name: calibre-web
+    hostname: calibre-web
+    restart: unless-stopped
+    networks:
+      - swag
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Panama
+      DOCKER_MODS: linuxserver/mods:universal-calibre
+      OAUTHLIB_RELAX_TOKEN_SCOPE: 1
+    volumes:
+      - type: volume
+        source: config
+        target: /config
+      - type: volume
+        source: data
+        target: /books
+volumes:
+  config: {}
+  data: {}
+networks:
+  swag:
+    external: true
